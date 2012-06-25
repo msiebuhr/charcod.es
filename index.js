@@ -108,12 +108,8 @@ $(document).ready(function () {
     }
     // }}}
 
-    // Handle search input
-    $("#searchField").keyup(function (e) {
-        // TODO: Check for non-text keypresses and empty strings
-        var searchTerm = e.srcElement.value;
-
-        var codes = search(searchTerm);
+    function searchAndShow(text) {
+        var codes = search(text);
 
         var html = ['<div class="row">'];
         $.each(codes, function (index, code) {
@@ -121,7 +117,18 @@ $(document).ready(function () {
         });
         html.push('</div>');
         $("#results").html(html.join(" "));
+    }
 
-
+    // Handle search input
+    var timeout;
+    $("#searchField").keyup(function (e) {
+        if (timeout) {
+            console.log("cancel timeout");
+            window.clearTimeout(timeout);
+        }
+        timeout = window.setTimeout(function () {
+            console.log("timeout done");
+            searchAndShow(e.srcElement.value);
+        }, 250);
     });
 });
