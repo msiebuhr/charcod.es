@@ -1,0 +1,16 @@
+{
+  "author": "",
+  "name": "unicodefinder",
+  "description": "Small website for finding useful unicode stuff",
+  "version": "0.0.0",
+  "dependencies": {
+      "JSONStream": "*",
+      "node-expat": "*",
+      "optimist": "*"
+  },
+  "devDependencies": {},
+  "optionalDependencies": {},
+  "engines": {
+    "node": "*"
+  }
+}

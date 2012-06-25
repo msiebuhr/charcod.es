@@ -2,6 +2,52 @@ $(document).ready(function () {
     trigramTable = {}; // For tags.length > 3
     unicodeTable = {};
 
+    // {{{ load data
+    $.ajax({
+        url: 'data-nounihan.json',
+        dataType: 'json',
+        success: function(data) {
+            $.each(data, function (index, unicodeChar) {
+                unicodeTable[unicodeChar.c] = unicodeChar;
+
+                // Use name as tags
+                tagsToTrigrams(unicodeChar.c, unicodeChar.n.split(" "));
+
+                // Use alias as tags
+                if (unicodeChar.a) {
+                    tagsToTrigrams(unicodeChar.c, unicodeChar.a);
+                }
+            });
+        },
+        error: function () {
+            console.log("could not load data.json:", arguments);
+        }
+    });
+    // }}}
+
+    // {{{ wordToTrigrams(word)
+    function wordToTrigrams(word) {
+        if (word.length === 0) {
+            return [];
+        } else if (word.length < 3) {
+            return [word];
+        }
+        var triGrams = [];
+        for (var i=0; i<=word.length-3; i++) {
+            triGrams.push(word.substr(i, 3));
+        }
+        return triGrams;
+    }
+    // }}}
+
+    // {{{ tagsToTrigrams(unicodeChar, tag)
+    function tagsToTrigrams(unicodeChar, tags) {
+        for(var i=0; i<tags.length; i++) {
+            tagToTrigrams(unicodeChar, tags[i]);
+        }
+    }
+    // }}}
+
     // {{{ tagToTrigrams(unicodeChar, tag)
     function tagToTrigrams(unicodeChar, tag) {
         function addOrCreate(table, key, value) {
@@ -9,67 +55,67 @@ $(document).ready(function () {
             table[key].push(value);
         }
 
-        for (var i=0; i<=tag.length-3; i++) {
-            addOrCreate(trigramTable, tag.substr(i, 3), unicodeChar);
+        var tgs = wordToTrigrams(tag);
+
+        if (tgs.indexOf("") !== -1) {
+            console.log("''", unicodeChar);
         }
+
+        $.each(wordToTrigrams(tag), function (index, triGram) {
+            addOrCreate(trigramTable, triGram, unicodeChar);
+        });
     }
     // }}}
 
-    // Load unicode data
-    $.ajax({
-        url: 'data.json',
-        dataType: 'json',
-        success: function(data) {
-            unicodeTable = data;
+    // {{{ search
+    function search(text) {
+        var words = text.split(" "),
+            triGrams = [],
+            charCodesFound = {};
 
-            $.map(unicodeTable, function (tags, unicodeChar) {
-                $.map(tags, function (tag) {
-                    tagToTrigrams(unicodeChar, tag);
+        // Convert search terms to tri-grams
+        $.each(words, function (index, word) {
+            triGrams = triGrams.concat(wordToTrigrams(word));
+        });
+
+        // Look up tri-grams
+        $.each(triGrams, function (index, triGram) {
+            if (triGram in trigramTable) {
+                $.each(trigramTable[triGram], function (index, charCode) {
+                    charCodesFound[charCode] = charCodesFound[charCode] || 0;
+                    charCodesFound[charCode] = charCodesFound[charCode] + 1;
                 });
-            });
-        },
-        error: function () {
-            console.log("could not load data.json:", arguments);
-        }
-    });
+            }
+        });
+
+        // Score the results for how many matches there were
+        var sortedOutput = [];
+        $.each(charCodesFound, function(charCode, matchingTriGrams) {
+            sortedOutput.push({code: charCode, score: matchingTriGrams});
+        });
+
+        // Sort in reverse
+        sortedOutput.sort(function (a, b) {
+            return b.score - a.score;
+        });
+
+        // Strip everything but the actual code
+        return $.map(sortedOutput, function (data) {
+            return data.code;
+        });
+    }
+    // }}}
 
     // Handle search input
     $("#searchField").keyup(function (e) {
         // TODO: Check for non-text keypresses and empty strings
-        var searchTerm = e.srcElement.value,
-            resultCharScore = {},
-            results = {};
+        var searchTerm = e.srcElement.value;
 
-        // Lookup trigrams
-        for (var i=0; i<=searchTerm.length-3; i++) {
-            var tri = searchTerm.substr(i, 3);
-            if (tri in trigramTable) {
-                results[tri] = results[tri] || [];
-                results[tri] = results[tri].concat(trigramTable[tri]);
-
-                // Count how many trigram-parts that match any char.
-                $.each(trigramTable[tri], function (index, unicodeChar) {
-                    resultCharScore[unicodeChar] = resultCharScore[unicodeChar] || 0;
-                    resultCharScore[unicodeChar] = resultCharScore[unicodeChar] + 1;
-                });
-            }
-        }
-
-        // Transform to map of [score] → [chars with score]
-        var charByScore = {};
-        $.map(resultCharScore, function (score, unicodeChar) {
-            if (score in charByScore) {
-                charByScore[score].push(unicodeChar);
-            } else {
-                charByScore[score] = [unicodeChar];
-            }
-
-            // Add to inner HTML
-        });
+        var codes = search(searchTerm);
 
         var html = ['<div class="row">'];
-        $.map(resultCharScore, function (score, unicodeChar) {
-            html.push('<div class="span1 resultChar">' + unicodeChar + '</div>');
+        $.each(codes, function (index, code) {
+            html.push('<div class="span1 resultChar">&#' + code + ';</div>');
         });
         html.push('</div>');
         $("#results").html(html.join(" "));
