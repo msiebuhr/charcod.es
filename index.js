@@ -81,10 +81,12 @@ $(document).ready(function () {
         // Look up tri-grams
         $.each(triGrams, function (index, triGram) {
             if (triGram in trigramTable) {
-                $.each(trigramTable[triGram], function (index, charCode) {
+                var charCodes = trigramTable[triGram];
+                for(var i=0; i<charCodes.length; i++) {
+                    var charCode = charCodes[i];
                     charCodesFound[charCode] = charCodesFound[charCode] || 0;
                     charCodesFound[charCode] = charCodesFound[charCode] + 1;
-                });
+                }
             }
         });
 
