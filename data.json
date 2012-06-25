@@ -1,0 +1,29 @@
+{
+    "0": ["arabic", "number", "zero"],
+    "1": ["arabic", "number", "one"],
+    "2": ["arabic", "number", "two"],
+    "3": ["arabic", "number", "three"],
+    "4": ["arabic", "number", "four"],
+    "5": ["arabic", "number", "five"],
+    "6": ["arabic", "number", "six"],
+    "7": ["arabic", "number", "seven"],
+    "8": ["arabic", "number", "eight"],
+    "9": ["arabic", "number", "nine"],
+
+    "½": ["arabic", "number", "one", "two", "half", "fraction"],
+    "¼": ["arabic", "number", "one", "four", "quarter", "fraction"],
+
+    "⁰": ["arabic", "number", "zero", "superscript", "html:&sup1"],
+    "¹": ["arabic", "number", "one", "superscript", "html:&sup2"],
+    "²": ["arabic", "number", "two", "superscript", "html:&sup3"],
+    "³": ["arabic", "number", "three", "superscript"],
+    "⁴": ["arabic", "number", "four", "superscript"],
+    "⁵": ["arabic", "number", "five", "superscript"],
+    "⁶": ["arabic", "number", "six", "superscript"],
+    "⁷": ["arabic", "number", "seven", "superscript"],
+    "⁸": ["arabic", "number", "eight", "superscript"],
+    "⁹": ["arabic", "number", "nine", "superscript"],
+
+    "→": ["arrow", "right"],
+    "←": ["arrow", "left"]
+}
