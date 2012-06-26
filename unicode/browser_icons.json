@@ -1,5 +1,6 @@
 {
-    "↻": {
-        "alias": ["browser reload"]
-    }
+    "→": { "alias": ["browser forward"] },
+    "←": { "alias": ["browser back"] },
+    "×": { "alias": ["browser stop"] },
+    "↻": { "alias": ["browser reload"] }
 }
