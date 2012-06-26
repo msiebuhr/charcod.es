@@ -6,7 +6,8 @@
   "dependencies": {
       "JSONStream": "*",
       "node-expat": "*",
-      "optimist": "*"
+      "optimist": "*",
+      "underscore": "*"
   },
   "devDependencies": {},
   "optionalDependencies": {},
