@@ -55,12 +55,6 @@ $(document).ready(function () {
             table[key].push(value);
         }
 
-        var tgs = wordToTrigrams(tag);
-
-        if (tgs.indexOf("") !== -1) {
-            console.log("''", unicodeChar);
-        }
-
         $.each(wordToTrigrams(tag), function (index, triGram) {
             addOrCreate(trigramTable, triGram, unicodeChar);
         });
