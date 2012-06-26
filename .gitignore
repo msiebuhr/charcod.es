@@ -1,10 +1,8 @@
 node_modules/
 
 # Temporary files
-ucd.all.flat.xml
 ucd.nounihan.flat.xml
 
 # Generated files
-data-all.json
-data-nounihan.json
+http-pub/data-nounihan.json
 unicode/00-base-unicode.json
