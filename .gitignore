@@ -4,5 +4,5 @@ node_modules/
 ucd.nounihan.flat.xml
 
 # Generated files
-http-pub/data-nounihan.json
+http-pub/data.json
 unicode/00-base-unicode.json

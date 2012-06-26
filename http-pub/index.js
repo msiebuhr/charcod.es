@@ -4,7 +4,7 @@ $(document).ready(function () {
 
     // {{{ load data
     $.ajax({
-        url: 'data-nounihan.json',
+        url: 'data.json',
         dataType: 'json',
         success: function(data) {
             $.each(data, function (index, unicodeChar) {

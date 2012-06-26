@@ -1,7 +1,7 @@
 PHONY:=ucd.nounihan.flat.xml
 EXTRA_JSON:=$(shell find unicode -type f -name \*.json)
 
-run: http-pub/data-nounihan.json
+run: http-pub/data.json
 	(cd http-pub; python -m SimpleHTTPServer)
 
 ucd.nounihan.flat.xml:
@@ -11,11 +11,11 @@ ucd.nounihan.flat.xml:
 unicode/00-base-unicode.json: ucd.nounihan.flat.xml ucd-xml2json.js
 	./ucd-xml2json.js -i $< -o $@
 
-http-pub/data-nounihan.json: unicode/00-base-unicode.json $(EXTRA_JSON)
+http-pub/data.json: unicode/00-base-unicode.json $(EXTRA_JSON)
 	./compact-json.js -o $@ $^
 
 clean:
-	rm http-pub/data-nounihan.json
+	rm http-pub/data.json
 	rm unicode/00-base-unicode.json
 	rm /tmp/ucd.*.flat.zip
 
