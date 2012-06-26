@@ -123,11 +123,9 @@ $(document).ready(function () {
     var timeout;
     $("#searchField").keyup(function (e) {
         if (timeout) {
-            console.log("cancel timeout");
             window.clearTimeout(timeout);
         }
         timeout = window.setTimeout(function () {
-            console.log("timeout done");
             searchAndShow(e.srcElement.value);
         }, 250);
     });
