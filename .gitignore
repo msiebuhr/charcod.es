@@ -2,7 +2,9 @@ node_modules/
 
 # Temporary files
 ucd.nounihan.flat.xml
+w3c-unicode.xml
 
 # Generated files
 http-pub/data.json
 unicode/00-base-unicode.json
+unicode/01-w3c-unicode.json
