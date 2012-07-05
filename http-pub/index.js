@@ -107,10 +107,36 @@ $(document).ready(function () {
 
         var html = ['<div class="row">'];
         $.each(codes, function (index, code) {
-            html.push('<div class="span1 resultChar">&#' + code + ';</div>');
+            html.push('<div class="span1 resultChar" id="' + code + '">&#' + code + ';</div>');
         });
         html.push('</div>');
         $("#results").html(html.join(" "));
+
+        // Click-handler that show a modal dialog
+        $(".resultChar").on('click', function (e) {
+            // Get data about the click-target
+            var target = $(e.target),
+                codepoint = target[0].id,
+                info = unicodeTable[codepoint];
+
+            // Set up the modal dialog
+            $("#charInfoModal > .modal-header > h3").html(
+                target.html() + ' <small>' + info.n.toUpperCase() + '</small>'
+            );
+
+            // Build a sensible description
+            var body = [];
+            body.push("<i>Name:</i> " + info.n);
+            body.push("<i>Codepoint:</i> " + codepoint);
+            body.push("<i>HTML:</i> &amp;" + codepoint + ";");
+            if (info.a && info.a.length > 0) {
+                body.push("<i>Alias(es):</i> " + info.a.join(", "));
+            }
+            $("#charInfoModal > .modal-body").html( body.join("<br>") );
+
+            // Show it!
+            $("#charInfoModal").modal('show');
+        });
     }
 
     // Handle search input
