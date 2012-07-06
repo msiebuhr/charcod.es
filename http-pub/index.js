@@ -145,7 +145,7 @@ $(document).ready(function () {
     // Handle search input
     var timeout,
         searchField = $('#searchField');
-        
+
     searchField.keyup(function (e) {
         if (timeout) {
             window.clearTimeout(timeout);
@@ -154,7 +154,7 @@ $(document).ready(function () {
             searchAndShow(searchField.val());
         }, 250);
     });
-    
+
     $('.form-search').submit(function () {
         searchAndShow(searchField.val());
         return false;
