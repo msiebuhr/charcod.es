@@ -1,14 +1,21 @@
 PHONY:=ucd.nounihan.flat.xml
 EXTRA_JSON:=$(shell find unicode -type f -name \*.json)
+CURRENT_GIT:=$(shell git describe --long --tags --always --dirty 2> /dev/null|| echo unknown)
 
 run: http-pub/data.json
 	(cd http-pub; python -m SimpleHTTPServer)
 
-copy-gh-pages: http-pub/data.json
+# Set up git pages
+# (cd gh-pages; git checkout --orphan gh-pages; git rm -rf .)
+gh-pages:
 	git clone git@github.com:msiebuhr/unicodefinder.git gh-pages
-	(cd gh-pages; git checkout --orphan gh-pages; git rm -rf .)
+
+commit-gh-pages: http-pub/data.json gh-pages
 	cp http-pub/* gh-pages/
-	echo "http-pub/* copied to gh-pages/ - check it's OK and commit/push it!"
+	(cd gh-pages; git add .; git commit --edit --message="Publish mater@$(CURRENT_GIT).")
+
+push-gh-pages:
+	(cd gh-pages; git push origin gh-pages)
 
 ucd.nounihan.flat.xml:
 	wget -c http://www.unicode.org/Public/6.1.0/ucdxml/ucd.nounihan.flat.zip -O /tmp/ucd.nounihan.flat.zip
