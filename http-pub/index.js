@@ -129,14 +129,20 @@ $(document).ready(function () {
 
             // Build a sensible description
             var body = [];
-            //body.push("<i>Name:</i> " + info.n);
-            body.push("<i>Codepoint:</i> " + codepoint);
-            body.push("<i>Source code:</i> \\u" + (codepoint + 0x10000).toString(16).substr(-4));
-            body.push("<i>HTML:</i> &amp;" + codepoint + ";");
-            if (info.a && info.a.length > 0) {
-                body.push("<i>Alias(es):</i> " + info.a.join(", "));
+            function addToBody(name, values) {
+                body.push('<dt>' + name + '</dt>');
+                values.forEach(function (value, index) {
+                    body.push('<dd>' + value + '</dd>');
+                });
             }
-            $("#charInfoModal > .modal-body").html( body.join("<br>") );
+            //addToBody("Name", [info.n.toUpperCase()]);
+            addToBody('Codepoint', [codepoint]);
+            addToBody("Source code", ["\\u" + (codepoint + 0x10000).toString(16).substr(-4)]);
+            addToBody("HTML", ["&amp;" + codepoint + ";"]);
+            if (info.a && info.a.length > 0) {
+                addToBody('Alias(es)', info.a);
+            }
+            $("#charInfoModal > .modal-body > dl").html( body.join("\n") );
 
             // Show it!
             $("#charInfoModal").modal('show');
