@@ -95,6 +95,14 @@ $(document).ready(function () {
             return b.score - a.score;
         });
 
+        // Filter out low-scoring stuff.
+        var cutoffScore = Math.ceil( sortedOutput[0].score/2 );
+        sortedOutput = $.map(sortedOutput, function (data, index) {
+            if (data.score > cutoffScore || index < 12 * 25) {
+                return data;
+            }
+        });
+
         // Strip everything but the actual code
         return $.map(sortedOutput, function (data) {
             return data.code;
