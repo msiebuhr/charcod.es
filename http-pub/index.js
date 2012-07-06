@@ -131,6 +131,7 @@ $(document).ready(function () {
             var body = [];
             //body.push("<i>Name:</i> " + info.n);
             body.push("<i>Codepoint:</i> " + codepoint);
+            body.push("<i>Source code:</i> \u" + (codepoint + 0x10000).toString(16).substr(-4));
             body.push("<i>HTML:</i> &amp;" + codepoint + ";");
             if (info.a && info.a.length > 0) {
                 body.push("<i>Alias(es):</i> " + info.a.join(", "));
