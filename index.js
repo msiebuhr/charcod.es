@@ -143,13 +143,20 @@ $(document).ready(function () {
     }
 
     // Handle search input
-    var timeout;
-    $("#searchField").keyup(function (e) {
+    var timeout,
+        searchField = $('#searchField');
+
+    searchField.keyup(function (e) {
         if (timeout) {
             window.clearTimeout(timeout);
         }
         timeout = window.setTimeout(function () {
-            searchAndShow(e.srcElement.value);
+            searchAndShow(searchField.val());
         }, 250);
+    });
+
+    $('.form-search').submit(function () {
+        searchAndShow(searchField.val());
+        return false;
     });
 });
