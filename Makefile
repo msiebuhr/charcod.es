@@ -12,7 +12,7 @@ gh-pages:
 
 commit-gh-pages: http-pub/data.json gh-pages
 	cp http-pub/* gh-pages/
-	(cd gh-pages; git add .; git commit --edit --message="Publish mater@$(CURRENT_GIT).")
+	(cd gh-pages; git add .; git commit --edit --message="Publish master@$(CURRENT_GIT).")
 
 push-gh-pages:
 	(cd gh-pages; git push origin gh-pages)
