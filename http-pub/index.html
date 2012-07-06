@@ -10,7 +10,27 @@
 	<style>
 		.resultChar {
 			text-align: center;
-			/*font-size: 3em;*/
+			/*background-color: #EEE;*/
+			-webkit-border-radius: 3px;
+			-moz-border-radius: 3px;
+			border-radius: 3px;
+			min-height: 30px;
+			line-height: 30px;
+		}
+
+		.resultChar:hover {
+			background-color: #EEE;
+		}
+
+		#results .row {
+			margin-top: 10px;
+			margin-bottom: 10px;
+		}
+
+		.footer {
+			margin-top: 45px;
+			padding: 25px 0;
+			border-top: 1px solid #E5E5E5;
 		}
 	</style>
 </head>
@@ -28,6 +48,11 @@
 	</div>
 
 	<div id="results">
+	</div>
+
+	<div class="footer">
+		<p class="pull-right">By Morten Siebuhr · <a href="https://github.com/msiebuhr">msiebuhr.github.com</a> · <a href="https://twitter.com/msiebuhr">@msiebuhr</a></p>
+		<p>Unicodefinder · Fork on <a href="https://github.com/msiebuhr/unicodefinder/">Github</a></p>
 	</div>
 
 	<div class="modal hide" id="charInfoModal">

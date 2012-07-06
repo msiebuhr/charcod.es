@@ -108,9 +108,12 @@ $(document).ready(function () {
         var html = ['<div class="row">'];
         $.each(codes, function (index, code) {
             html.push('<div class="span1 resultChar" id="' + code + '">&#' + code + ';</div>');
-        });
+            // Break every 12th box
+            if (index % 12 === 11) {
+                html.push('</div>\n<div class="row">');
+            }        });
         html.push('</div>');
-        $("#results").html(html.join(" "));
+        $("#results").html(html.join(""));
 
         // Click-handler that show a modal dialog
         $(".resultChar").on('click', function (e) {
@@ -126,7 +129,7 @@ $(document).ready(function () {
 
             // Build a sensible description
             var body = [];
-            body.push("<i>Name:</i> " + info.n);
+            //body.push("<i>Name:</i> " + info.n);
             body.push("<i>Codepoint:</i> " + codepoint);
             body.push("<i>HTML:</i> &amp;" + codepoint + ";");
             if (info.a && info.a.length > 0) {
