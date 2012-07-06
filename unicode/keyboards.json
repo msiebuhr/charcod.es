@@ -1,0 +1,8 @@
+
+{
+    "⇪": { "alias": ["Keyboard", "CAPS LOCK"] },
+    "↹": { "alias": ["Keyboard", "Tabulator"] },
+
+    "⌘ ": { "alias": ["Keyboard", "Apple", "Mac", "Command"] },
+    "⌥": { "alias": ["Keyboard", "Apple", "Mac", "Option"] }
+}
