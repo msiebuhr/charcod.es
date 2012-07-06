@@ -138,7 +138,7 @@ $(document).ready(function () {
             //addToBody("Name", [info.n.toUpperCase()]);
             addToBody('Codepoint', [codepoint]);
             addToBody("Source code", ["\\u" + (parseInt(codepoint, 10) + 0x10000).toString(16).substr(-4)]);
-            addToBody("HTML", ["&amp;" + codepoint + ";"]);
+            addToBody("HTML", ["&amp;#" + codepoint + ";"]);
             if (info.a && info.a.length > 0) {
                 addToBody('Alias(es)', info.a);
             }
