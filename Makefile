@@ -4,6 +4,12 @@ EXTRA_JSON:=$(shell find unicode -type f -name \*.json)
 run: http-pub/data.json
 	(cd http-pub; python -m SimpleHTTPServer)
 
+copy-gh-pages: http-pub/data.json
+	git clone git@github.com:msiebuhr/unicodefinder.git gh-pages
+	(cd gh-pages; git checkout --orphan gh-pages; git rm -rf .)
+	cp http-pub/* gh-pages/
+	echo "http-pub/* copied to gh-pages/ - check it's OK and commit/push it!"
+
 ucd.nounihan.flat.xml:
 	wget -c http://www.unicode.org/Public/6.1.0/ucdxml/ucd.nounihan.flat.zip -O /tmp/ucd.nounihan.flat.zip
 	unzip -p /tmp/ucd.nounihan.flat.zip > $@
