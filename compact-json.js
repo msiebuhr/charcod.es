@@ -69,6 +69,7 @@ function mergeCompact(existing, added) {
 var data = {};
 
 args._.forEach(function(file) {
+    console.warn("Reading", file);
     var json = JSON.parse(fs.readFileSync(file));
 
     if (_.isArray(json)) {
@@ -76,7 +77,7 @@ args._.forEach(function(file) {
         return;
     }
 
-    console.warn("Read", _(json).size(), "from", file);
+    console.warn(" · Loaded", _(json).size(), "codepoints");
 
     // Convert to code → compact block
     _(json).forEach(function (value, key) {
