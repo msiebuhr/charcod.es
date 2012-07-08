@@ -110,6 +110,7 @@ $(document).ready(function () {
     }
     // }}}
 
+    // {{{ searchAndShow(text)
     function searchAndShow(text) {
         var codes = search(text);
 
@@ -157,6 +158,7 @@ $(document).ready(function () {
             $("#charInfoModal").modal('show');
         });
     }
+    // }}} searchAndShow(text)
 
     // Handle search input
     var timeout,
@@ -170,6 +172,8 @@ $(document).ready(function () {
             searchAndShow(searchField.val());
         }, 250);
     });
+
+    searchField.focus();
 
     $('.form-search').submit(function () {
         searchAndShow(searchField.val());
