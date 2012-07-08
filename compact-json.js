@@ -61,7 +61,9 @@ function mergeCompact(existing, added) {
     if (added.b && !existing.b) { existing.b = added.b; }
     if (added.c && !existing.c) { existing.c = added.c; }
     // Update alia
-    existing.a = _.union(existing.a || [], added.a || []);
+    if (existing.a || added.a) {
+        existing.a = _.union(existing.a || [], added.a || []);
+    }
 
     return existing;
 }
