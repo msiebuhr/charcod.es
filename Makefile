@@ -9,6 +9,7 @@ run: http-pub/data.json
 # (cd gh-pages; git checkout --orphan gh-pages; git rm -rf .)
 gh-pages:
 	git clone git@github.com:msiebuhr/unicodefinder.git gh-pages
+	(cd gh-pages; git checkout gh-pages)
 
 commit-gh-pages: http-pub/data.json gh-pages
 	cp http-pub/* gh-pages/
