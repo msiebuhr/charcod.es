@@ -36,11 +36,17 @@ var JSONStream = require('JSONStream'),
 var argparse = require('optimist')
     .usage('Usage: $0 [-v] [-o <outfile>] <infile> ... <infile>')
     .demand(1)
+    .alias('v', 'verbose')
     .alias('o', 'output');
 var args = argparse.argv;
 
 var output = args.output ? fs.createWriteStream(args.output) : process.stdout,
     jsonStream = JSONStream.stringify("[", ",\n", "]\n");
+
+function print(string) {
+    process.stderr.write(_(arguments).toArray().join(" "));
+}
+print = args.verbose ? print : function () {};
 
 jsonStream.pipe(output);
 
@@ -79,7 +85,7 @@ _(args._).uniq().sort().forEach(function(file) {
         return;
     }
 
-    console.warn(" · Loaded", _(json).size(), "codepoints");
+    print(" · loaded", _(json).size(), "codepoints.");
 
     // Convert to code → compact block
     _(json).forEach(function (value, key) {
@@ -95,12 +101,13 @@ _(args._).uniq().sort().forEach(function(file) {
             data[code] = compact;
         }
     });
+    print("\n");
 });
 
 _(data).forEach(function (elem, key) {
     jsonStream.write(elem);
 });
 
-console.warn("Wrote", _(data).size(), "elements to output");
+print("Writing", _(data).size(), "elements to", args.output || "-","\n");
 
 jsonStream.end();
