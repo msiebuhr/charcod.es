@@ -63,7 +63,7 @@ $(document).ready(function () {
 
     // {{{ search
     function search(text) {
-        var words = text.split(" "),
+        var words = text.toLowerCase().split(" "),
             triGrams = [],
             charCodesFound = {};
 
