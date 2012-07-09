@@ -70,8 +70,8 @@ function mergeCompact(existing, added) {
 
 var data = {};
 
-args._.forEach(function(file) {
-    console.warn("Reading", file);
+_(args._).uniq().sort().forEach(function(file) {
+    print("Reading", file);
     var json = JSON.parse(fs.readFileSync(file));
 
     if (_.isArray(json)) {
