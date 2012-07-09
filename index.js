@@ -63,7 +63,7 @@ $(document).ready(function () {
 
     // {{{ search
     function search(text) {
-        var words = text.split(" "),
+        var words = text.toLowerCase().split(" "),
             triGrams = [],
             charCodesFound = {};
 
@@ -110,6 +110,7 @@ $(document).ready(function () {
     }
     // }}}
 
+    // {{{ searchAndShow(text)
     function searchAndShow(text) {
         var codes = search(text);
 
@@ -144,7 +145,8 @@ $(document).ready(function () {
                 });
             }
             //addToBody("Name", [info.n.toUpperCase()]);
-            addToBody('Codepoint', [codepoint]);
+            addToBody("Codepoint", [codepoint]);
+            addToBody("Group / Category", [info.b]);
             addToBody("Source code", ["\\u" + (parseInt(codepoint, 10) + 0x10000).toString(16).substr(-4)]);
             addToBody("HTML", ["&amp;#" + codepoint + ";"]);
             if (info.a && info.a.length > 0) {
@@ -156,6 +158,7 @@ $(document).ready(function () {
             $("#charInfoModal").modal('show');
         });
     }
+    // }}} searchAndShow(text)
 
     // Handle search input
     var timeout,
@@ -169,6 +172,8 @@ $(document).ready(function () {
             searchAndShow(searchField.val());
         }, 250);
     });
+
+    searchField.focus();
 
     $('.form-search').submit(function () {
         searchAndShow(searchField.val());
