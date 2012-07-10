@@ -17,7 +17,6 @@ commit-gh-pages: http-pub/data.json gh-pages
 
 push-gh-pages:
 	(cd gh-pages; git pull origin gh-pages)
-	(cd gh-pages; git pull origin master)
 	(cd gh-pages; git push origin gh-pages)
 
 ucd.nounihan.flat.xml:
