@@ -6,12 +6,12 @@ HTTP_PUB_FILES:=$(shell find http-pub -type f \! -name data.json)
 run: http-pub-production
 	(cd http-pub-production; python -m SimpleHTTPServer)
 
-http-pub-production: $(HTTP_PUB_FILES) http-pub/data.json
+http-pub-production: http-pub/index.html $(HTTP_PUB_FILES) http-pub/data.json
 	./node_modules/.bin/buildProduction \
-		--root http-pub/ \
-		--outroot http-pub-production \
-		http-pub/index.html
-	cp http-pub/data.json http-pub-production/
+		--root $(<D) \
+		--outroot $@ \
+		$<
+	cp http-pub/data.json $@/
 
 # Set up git pages
 # (cd gh-pages; git checkout --orphan gh-pages; git rm -rf .)
