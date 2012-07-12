@@ -5,6 +5,7 @@
   "version": "0.0.0",
   "dependencies": {
       "JSONStream": "*",
+      "assetgraph-builder": "*",
       "node-expat": "*",
       "optimist": "*",
       "underscore": "*"

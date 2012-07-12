@@ -1,9 +1,17 @@
 PHONY:=ucd.nounihan.flat.xml
-EXTRA_JSON:=$(shell find unicode -type f -name \*.json)
+EXTRA_JSON:=$(shell find unicode -type f -name \*.json \! -name \?\?-\*-unicode.json)
 CURRENT_GIT:=$(shell git describe --long --tags --always --dirty 2> /dev/null|| echo unknown)
+HTTP_PUB_FILES:=$(shell find http-pub -type f \! -name data.json)
 
-run: http-pub/data.json
-	(cd http-pub; python -m SimpleHTTPServer)
+run: http-pub-production
+	(cd http-pub-production; python -m SimpleHTTPServer)
+
+http-pub-production: $(HTTP_PUB_FILES) http-pub/data.json
+	./node_modules/.bin/buildProduction \
+		--root http-pub/ \
+		--outroot http-pub-production \
+		http-pub/index.html
+	cp http-pub/data.json http-pub-production/
 
 # Set up git pages
 # (cd gh-pages; git checkout --orphan gh-pages; git rm -rf .)
@@ -13,7 +21,7 @@ gh-pages:
 
 commit-gh-pages: http-pub/data.json gh-pages
 	(cd gh-pages; git pull origin gh-pages)
-	cp http-pub/* gh-pages/
+	cp http-pub-production/* gh-pages/
 	(cd gh-pages; git add .; git commit --edit --message="Publish master@$(CURRENT_GIT).")
 
 push-gh-pages:
@@ -42,4 +50,4 @@ clean:
 	rm -rf /tmp/ucd.*.flat.zip
 
 distclean: clean
-	rm -rf ucd.nounihan.flat.xml w3c-unicode.xml
+	rm -rf ucd.nounihan.flat.xml w3c-unicode.xml http-pub-production
