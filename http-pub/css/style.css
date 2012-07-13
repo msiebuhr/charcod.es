@@ -1,0 +1,25 @@
+.resultChar {
+    text-align: center;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    min-height: 2em;
+    line-height: 2em;
+    font-size: 2em;
+}
+
+.resultChar:hover {
+    background-color: #EEE;
+    cursor: pointer;
+}
+
+#results .row {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.footer {
+    margin-top: 45px;
+    padding: 25px 0;
+    border-top: 1px solid #E5E5E5;
+}
