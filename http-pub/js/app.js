@@ -37,6 +37,11 @@
 
     document.getElementById('searchField').focus();
 
+    // Block form submission. Search will be activated when data is downloaded
+    document.forms[0].onsubmit = function () {
+        return false;
+    };
+
     _gaq.push(['_setAccount', 'UA-33198175-1']),
     _gaq.push(['_trackPageview']),
 
@@ -65,6 +70,29 @@
                             tagsToTrigrams(unicodeChar.c, unicodeChar.a);
                         }
                     });
+
+                    // Handle search input
+                    var timeout,
+                        searchField = $('#searchField');
+
+                    searchField.keyup(function (e) {
+                        if (timeout) {
+                            window.clearTimeout(timeout);
+                        }
+                        timeout = window.setTimeout(function () {
+                            searchAndShow(searchField.val());
+                        }, 250);
+                    });
+
+                    $('.form-search').submit(function () {
+                        searchAndShow(searchField.val());
+                        return false;
+                    });
+
+                    // Search right away if the user has already typed something
+                    if (searchField.val()) {
+                        searchAndShow(searchField.val());
+                    }
                 },
                 error: function () {
                     throw new Error("could not load data.json: " + arguments);
@@ -207,25 +235,6 @@
                 });
             }
             // }}} searchAndShow(text)
-
-            // Handle search input
-            var timeout,
-                searchField = $('#searchField');
-
-            searchField.keyup(function (e) {
-                if (timeout) {
-                    window.clearTimeout(timeout);
-                }
-                timeout = window.setTimeout(function () {
-                    searchAndShow(searchField.val());
-                }, 250);
-            });
-
-            $('.form-search').submit(function () {
-                searchAndShow(searchField.val());
-                return false;
-            });
-
         });
     });
 }());
