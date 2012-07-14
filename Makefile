@@ -25,7 +25,7 @@ commit-gh-pages: http-pub/data.json gh-pages
 	(cd gh-pages; git add .; git commit --edit --message="Publish master@$(CURRENT_GIT).")
 
 push-gh-pages:
-	(cd gh-pages; git pull origin gh-pages --rebase)
+	(cd gh-pages; git pull origin gh-pages)
 	(cd gh-pages; git push origin gh-pages)
 
 ucd.nounihan.flat.xml:
