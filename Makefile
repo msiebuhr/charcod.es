@@ -3,8 +3,8 @@ EXTRA_JSON:=$(shell find unicode -type f -name \*.json \! -name \?\?-\*-unicode.
 CURRENT_GIT:=$(shell git describe --long --tags --always --dirty 2> /dev/null|| echo unknown)
 HTTP_PUB_FILES:=$(shell find http-pub -type f \! -name data.json)
 
-run: http-pub-production
-	(cd http-pub-production; python -m SimpleHTTPServer)
+run: http-pub
+	(cd http-pub; python -m SimpleHTTPServer)
 
 http-pub-production: http-pub/index.html $(HTTP_PUB_FILES) http-pub/data.json
 	./node_modules/.bin/buildProduction \
