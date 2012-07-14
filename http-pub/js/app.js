@@ -193,6 +193,13 @@
             function searchAndShow(text) {
                 var codes = search(text);
 
+                // Show help?
+                if (codes.length > 1) {
+                    $("#help").hide()
+                } else {
+                    $("#help").show()
+                }
+
                 var html = ['<div class="row">'];
                 $.each(codes, function (index, code) {
                     html.push('<div class="span1 resultChar" id="' + code + '">&#' + code + ';</div>');
