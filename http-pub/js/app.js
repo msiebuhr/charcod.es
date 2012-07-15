@@ -255,6 +255,10 @@
             } else {
                 codes = search(text);
             }
+            if (text.length === 1 && codes.length === 0) {
+                // Assume unicode input
+                codes = [text.charCodeAt(0)];
+            }
 
             // Show help?
             if (codes.length === 0) {
