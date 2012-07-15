@@ -3,64 +3,78 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="chrome=1">
-	<link rel="stylesheet" type="text/css" href="css/style.css">
-	<link rel="stylesheet" type="text/css" href="http://current.bootstrapcdn.com/bootstrap-v204/css/bootstrap-combined.min.css">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link rel="stylesheet" type="text/css" href="css/elements.css">
+	<link rel="stylesheet" type="text/css" href="css/font.css">
+	<link rel="stylesheet" type="text/css" href="css/app.css">
+	<link rel="stylesheet" type="text/css" href="css/info.css">
 </head>
 <body>
-<div class="container">
+	<section class="page">
+		<header class="title">
+			<h1>Unicodefinder</h1>
 
-	<div class="hero-unit" style="text-align: center; margin-top: 3em">
-		<h1>Unicodefinder</h1>
+			<form>
+				<input type="text" id="searchField" placeholder="Type a keyword to search…">
+			</form>
+		</header>
 
-		<p>
-		<form class="form-search">
-			<input type="text" id="searchField" class="input-medium search-query span4" placeholder="Type a keyword to search…">
-		</form>
-		</p>
-	</div>
-
-	<div id="help">
-		<div class="row">
-			<div class="span6">
-				<h2>Help‽</h2>
-				<p>Find unicode characters by searching by keywords, name or
-				whatever above.<p>
-			</div>
-			<div class="span6">
-				<h2>Examples</h2>
-				<ul>
-					<li>»Arrow«</li>
-					<li>»Playing cards«</li>
-					<li>»Keyboard«</li>
-					<li>»Smiling face«</li>
-				</ul>
+		<div id="help">
+			<div class="row">
+				<div class="span6">
+					<h2>Help‽</h2>
+					<p>Find unicode characters by searching by keywords, name or
+					whatever above.<p>
+				</div>
+				<div class="span6">
+					<h2>Examples</h2>
+					<ul>
+						<li>»Arrow«</li>
+						<li>»Playing cards«</li>
+						<li>»Keyboard«</li>
+						<li>»Smiling face«</li>
+					</ul>
+				</div>
 			</div>
 		</div>
-	</div>
-	<div id="results">
-	</div>
+		<section id="results"></section>
 
-	<div class="footer">
-		<p class="pull-right">By Morten Siebuhr · <a href="https://github.com/msiebuhr">github.com/msiebuhr</a> · <a href="https://twitter.com/msiebuhr">@msiebuhr</a></p>
-		<p>Unicodefinder · <a href="https://github.com/msiebuhr/unicodefinder/">Source@Github</a></p>
-	</div>
+		<footer>
+			<p class="author">By Morten Siebuhr · <a href="https://github.com/msiebuhr">github.com/msiebuhr</a> · <a href="https://twitter.com/msiebuhr">@msiebuhr</a></p>
+			<p>Unicodefinder · <a href="https://github.com/msiebuhr/unicodefinder/">Source@Github</a></p>
+		<footer>
+	</section>
 
-	<div class="modal hide" id="charInfoModal">
-		<div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal">×</button>
-			<h3>CHAR <small>UNICODE NAME</small></h3>
-		</div>
-		<div class="modal-body">
-			<dl class="dl-horizontal">
-			</dl>
-		</div>
-		<div class="modal-footer">
-			<a href="#" class="btn" data-dismiss="modal">Close</a>
-			<!--<a href="#" class="btn btn-primary">Save changes</a>-->
-		</div>
-	</div>
-
-</div>
+	<section class="templates">
+		<aside class="charInfo">
+			<section>
+				<h2></h2>
+				<h3></h3>
+				<p class="aliases"></p>
+			</section>
+			<table>
+				<tbody>
+					<tr>
+						<th>HTML</th>
+						<td class="char-html"></td>
+					</tr>
+					<tr>
+						<th>Source Code</th>
+						<td class="char-source"></td>
+					</tr>
+					<tr>
+						<th>Codepoint</th>
+						<td class="char-codepoint"></td>
+					</tr>
+					<tr>
+						<th>Group / Category</th>
+						<td class="char-group"></td>
+					</tr>
+				</tbody>
+			</table>
+		</aside>
+	</section>
 
 	<script src="js/app.js" type="text/javascript"></script>
 </body>

@@ -1,0 +1,42 @@
+.charInfo {
+    clear: both;
+    padding: 20px;
+    margin: 3px -3px;
+    background-color: #EEE;
+    border: 3px solid rgba(82,168,236,0.1);
+    overflow: auto;
+
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+
+.charInfo section,
+.charInfo table {
+    float: left;
+}
+
+.charInfo section {
+    text-align: center;
+    margin-right: 20px;
+}
+
+.charInfo h2 {
+    font-size: 6em;
+    line-height: 1em;
+    margin-bottom: 10px;
+}
+
+.charInfo p {
+    font-style: italic;
+}
+
+.charInfo table {
+    border: 1px solid #666;
+    padding: 10px;
+}
+
+.charInfo th {
+    text-align: right;
+    padding-right: 10px;
+}
