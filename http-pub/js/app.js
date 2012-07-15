@@ -54,7 +54,7 @@
                 var active,
                     info,
                     getTpl = function (elm) {
-                        var codepoint = elm[0].id,
+                        var codepoint = elm[0].id.replace('id', ''),
                             info = unicodeTable[codepoint],
                             tpl = $('.templates .charInfo').clone();
 
@@ -97,11 +97,11 @@
                 }
             }());
 
-            // Click-handler that show a modal dialog
-            $('#results').on('click', 'a', function (e) {
-                popup.activate($(e.target));
-                e.preventDefault();
-            });
+        // Click-handler that show a modal dialog
+        $('#results').on('click', 'a', function (e) {
+            popup.activate($(e.target));
+            e.preventDefault();
+        });
 
         // {{{ load data
         $.ajax({
@@ -190,7 +190,7 @@
 
         // {{{ search
         function search(text) {
-            var words = text.toLowerCase().split(" "),
+            var words = text.split(" "),
                 triGrams = [],
                 charCodesFound = {};
 
@@ -243,18 +243,34 @@
 
         // {{{ searchAndShow(text)
         function searchAndShow(text) {
-            var codes = search(text);
+            text = text.replace(/^\s*|\s*$/, '').toLowerCase();
+            var codes = [],
+                sourceMatch = text.match(/^\\u(\d{4})$/),
+                codePointMatch = text.match(/^&#(\d+);$/) || text.match(/^(\d+)$/);
+
+            if (sourceMatch) {
+                codes = [parseInt(sourceMatch[1], 16)];
+            } else if (codePointMatch) {
+                codes = [codePointMatch[1]];
+            } else {
+                codes = search(text);
+            }
 
             // Show help?
-            if (codes.length > 1) {
-                $("#help").hide()
-            } else {
+            if (codes.length === 0) {
                 $("#help").show()
+            } else {
+                $("#help").hide()
             }
 
             $("#results").html($.map(codes, function (code) {
-                return '<a href="#' + code + '" id="' + code + '">&#' + code + ';</a>';
+                return '<a href="#' + code + '" id="id' + code + '">&#' + code + ';</a>';
             }).join(""));
+
+            // If there is only one result, show details right away
+            if (codes.length === 1) {
+                popup.activate($('#results a').first());
+            }
         }
         // }}} searchAndShow(text)
     });
