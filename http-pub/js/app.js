@@ -173,7 +173,10 @@
 
         // {{{ tagsToTrigrams(unicodeChar, tag)
         function tagsToTrigrams(unicodeChar, tags) {
-            for (var i = 0; i < tags.length; i += 1) {
+            var i = 0,
+                len = tags.length;
+
+            for (; i < len; i += 1) {
                 tagToTrigrams(unicodeChar, tags[i]);
             }
         }
@@ -181,14 +184,16 @@
 
         // {{{ tagToTrigrams(unicodeChar, tag)
         function tagToTrigrams(unicodeChar, tag) {
-            function addOrCreate(table, key, value) {
-                table[key] = table[key] || [];
-                table[key].push(value);
-            }
+            var trigrams = wordToTrigrams(tag),
+                i = 0,
+                len = trigrams.length,
+                trigram;
 
-            $.each(wordToTrigrams(tag), function (index, triGram) {
-                addOrCreate(trigramTable, triGram, unicodeChar);
-            });
+            for (; i < len; i += 1) {
+                trigram = trigrams[i];
+                trigramTable[trigram] = trigramTable[trigram] || [];
+                trigramTable[trigram].push(unicodeChar);
+            }
         }
         // }}}
 
