@@ -128,7 +128,6 @@
             url: 'data.json',
             dataType: 'json',
             success: function (data) {
-                console.profile();
                 var i = 0,
                     len = data.length,
                     unicodeChar;
@@ -145,7 +144,6 @@
                         tagsToTrigrams(unicodeChar.c, unicodeChar.a);
                     }
                 }
-                console.profileEnd();
 
                 // Search right away if the user has already typed something
                 if (searchField.val()) {
