@@ -193,7 +193,9 @@
 
             for (; i < len; i += 1) {
                 trigram = trigrams[i];
-                trigramTable[trigram] = trigramTable[trigram] || [];
+                if (!trigramTable[trigram]) {
+                    trigramTable[trigram] = [];
+                }
                 trigramTable[trigram].push(unicodeChar);
             }
         }
