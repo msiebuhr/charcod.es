@@ -129,20 +129,22 @@
             dataType: 'json',
             success: function (data) {
                 console.profile();
-                $.each(data, function (index, unicodeChar) {
-                    unicodeTable[unicodeChar.c] = unicodeChar;
+                var i = 0,
+                    len = data.length,
+                    unicodeChar;
+
+                for (; i < len; i++) {
+                    unicodeChar = data[i];
 
                     // Use name as tags
                     tagsToTrigrams(unicodeChar.c, unicodeChar.n.split(" "));
-
                     // Then the block
                     tagsToTrigrams(unicodeChar.c, [unicodeChar.b]);
-
                     // Use alias as tags
                     if (unicodeChar.a) {
                         tagsToTrigrams(unicodeChar.c, unicodeChar.a);
                     }
-                });
+                }
                 console.profileEnd();
 
                 // Search right away if the user has already typed something
