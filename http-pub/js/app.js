@@ -269,7 +269,7 @@
             }
 
             $("#results").html($.map(codes, function (code) {
-                return '<a href="#' + code + '" id="id' + code + '">&#' + code + ';</a>';
+                return '<a href="#id' + code + '" id="id' + code + '">&#' + code + ';</a>';
             }).join(""));
 
             // If there is only one result, show details right away
