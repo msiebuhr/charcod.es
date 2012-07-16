@@ -128,20 +128,22 @@
             url: 'data.json',
             dataType: 'json',
             success: function (data) {
-                $.each(data, function (index, unicodeChar) {
-                    unicodeTable[unicodeChar.c] = unicodeChar;
+                var i = 0,
+                    len = data.length,
+                    unicodeChar;
+
+                for (; i < len; i++) {
+                    unicodeChar = data[i];
 
                     // Use name as tags
                     tagsToTrigrams(unicodeChar.c, unicodeChar.n.split(" "));
-
                     // Then the block
                     tagsToTrigrams(unicodeChar.c, [unicodeChar.b]);
-
                     // Use alias as tags
                     if (unicodeChar.a) {
                         tagsToTrigrams(unicodeChar.c, unicodeChar.a);
                     }
-                });
+                }
 
                 // Search right away if the user has already typed something
                 if (searchField.val()) {
@@ -171,7 +173,10 @@
 
         // {{{ tagsToTrigrams(unicodeChar, tag)
         function tagsToTrigrams(unicodeChar, tags) {
-            for (var i = 0; i < tags.length; i += 1) {
+            var i = 0,
+                len = tags.length;
+
+            for (; i < len; i += 1) {
                 tagToTrigrams(unicodeChar, tags[i]);
             }
         }
@@ -179,14 +184,18 @@
 
         // {{{ tagToTrigrams(unicodeChar, tag)
         function tagToTrigrams(unicodeChar, tag) {
-            function addOrCreate(table, key, value) {
-                table[key] = table[key] || [];
-                table[key].push(value);
-            }
+            var trigrams = wordToTrigrams(tag),
+                i = 0,
+                len = trigrams.length,
+                trigram;
 
-            $.each(wordToTrigrams(tag), function (index, triGram) {
-                addOrCreate(trigramTable, triGram, unicodeChar);
-            });
+            for (; i < len; i += 1) {
+                trigram = trigrams[i];
+                if (!trigramTable[trigram]) {
+                    trigramTable[trigram] = [];
+                }
+                trigramTable[trigram].push(unicodeChar);
+            }
         }
         // }}}
 
