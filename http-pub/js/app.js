@@ -53,19 +53,21 @@
             popup = (function () {
                 var active,
                     info,
-                    getTpl = function (elm) {
-                        var codepoint = elm[0].id.replace('id', ''),
-                            info = unicodeTable[codepoint],
+                    getTpl = function (codePoint) {
+                        var info = unicodeTable[codePoint],
                             tpl = $('.templates .charInfo').clone();
 
-                        tpl.find('h2').html(elm.html());
-                        tpl.find('h3').html(info.n);
-                        tpl.find('.char-html').html('&amp;#' + codepoint + ';');
-                        tpl.find('.char-source').html('\\u' + (parseInt(codepoint, 10) + 0x10000).toString(16).substr(-4));
-                        tpl.find('.char-codepoint').html(codepoint);
-                        tpl.find('.char-group').html(info.b);
-                        if (info.a && info.a.length > 0) {
-                            tpl.find(".aliases").html(info.a.join(', '));
+                        tpl.find('h2').html(String.fromCharCode(codePoint));
+                        tpl.find('.char-html').html('&amp;#' + codePoint + ';');
+                        tpl.find('.char-source').html('\\u' + (parseInt(codePoint, 10) + 0x10000).toString(16).substr(-4));
+                        tpl.find('.char-codepoint').html(codePoint);
+
+                        if (info) {
+                            tpl.find('h3').html(info.n);
+                            tpl.find('.char-group').html(info.b);
+                            if (info.a && info.a.length > 0) {
+                                tpl.find(".aliases").html(info.a.join(', '));
+                            }
                         }
 
                         return tpl;
@@ -77,7 +79,7 @@
                             this.deactivate();
                         }
                         active = elm;
-                        info = getTpl(elm);
+                        info = getTpl(elm[0].id.replace('id', ''));
 
                         var offset = elm.position().top,
                             currentElement = elm;
@@ -103,6 +105,24 @@
             e.preventDefault();
         });
 
+        // Handle search input
+        var timeout,
+            searchField = $('#searchField');
+
+        searchField.keyup(function (e) {
+            if (timeout) {
+                window.clearTimeout(timeout);
+            }
+            timeout = window.setTimeout(function () {
+                searchAndShow(searchField.val().trim());
+            }, 250);
+        });
+
+        $('.form-search').submit(function () {
+            searchAndShow(searchField.val().trim());
+            return false;
+        });
+
         // {{{ load data
         $.ajax({
             url: 'data.json',
@@ -121,24 +141,6 @@
                     if (unicodeChar.a) {
                         tagsToTrigrams(unicodeChar.c, unicodeChar.a);
                     }
-                });
-
-                // Handle search input
-                var timeout,
-                    searchField = $('#searchField');
-
-                searchField.keyup(function (e) {
-                    if (timeout) {
-                        window.clearTimeout(timeout);
-                    }
-                    timeout = window.setTimeout(function () {
-                        searchAndShow(searchField.val());
-                    }, 250);
-                });
-
-                $('.form-search').submit(function () {
-                    searchAndShow(searchField.val());
-                    return false;
                 });
 
                 // Search right away if the user has already typed something
@@ -190,7 +192,7 @@
 
         // {{{ search
         function search(text) {
-            var words = text.split(" "),
+            var words = text.toLowerCase().split(" "),
                 triGrams = [],
                 charCodesFound = {};
 
@@ -243,7 +245,6 @@
 
         // {{{ searchAndShow(text)
         function searchAndShow(text) {
-            text = text.replace(/^\s*|\s*$/, '').toLowerCase();
             var codes = [],
                 sourceMatch = text.match(/^\\u(\d{4})$/),
                 codePointMatch = text.match(/^&#(\d+);$/) || text.match(/^(\d+)$/);
