@@ -128,6 +128,7 @@
             url: 'data.json',
             dataType: 'json',
             success: function (data) {
+                console.profile();
                 $.each(data, function (index, unicodeChar) {
                     unicodeTable[unicodeChar.c] = unicodeChar;
 
@@ -142,6 +143,7 @@
                         tagsToTrigrams(unicodeChar.c, unicodeChar.a);
                     }
                 });
+                console.profileEnd();
 
                 // Search right away if the user has already typed something
                 if (searchField.val()) {
