@@ -25,6 +25,12 @@
     font-size: 6em;
     line-height: 1em;
     margin-bottom: 10px;
+    font-weight: normal;
+    min-width: 1.5em;
+}
+
+.charInfo h3 {
+    font-variant: small-caps;
 }
 
 .charInfo p {
