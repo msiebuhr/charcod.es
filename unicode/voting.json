@@ -1,0 +1,19 @@
+{
+    "▵": {"alias": ["vote", "up"]},
+    "▴": {"alias": ["vote", "up"]},
+    "△": {"alias": ["vote", "up"]},
+    "▲": {"alias": ["vote", "up"]},
+
+    "▿": {"alias": ["vote", "down"]},
+    "▾": {"alias": ["vote", "down"]},
+    "▽": {"alias": ["vote", "down"]},
+    "▼": {"alias": ["vote", "down"]},
+
+    "✓": {"alias": ["vote"]},
+    "✔": {"alias": ["vote"]},
+    "✗": {"alias": ["vote"]},
+    "✘": {"alias": ["vote"]},
+
+    "☑": {"alias": ["vote"]},
+    "☒": {"alias": ["vote"]}
+}
