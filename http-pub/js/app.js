@@ -57,7 +57,7 @@
                         var info = unicodeTable[codePoint],
                             tpl = $('.templates .charInfo').clone();
 
-                        tpl.find('h2').html(String.fromCharCode(codePoint));
+                        tpl.find('h2').html('&#' + codePoint + ';');
                         tpl.find('.char-html').html('&amp;#' + codePoint + ';');
                         tpl.find('.char-source').html('\\u' + (parseInt(codePoint, 10) + 0x10000).toString(16).substr(-4));
                         tpl.find('.char-codepoint').html(codePoint);
