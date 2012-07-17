@@ -134,6 +134,7 @@
 
                 for (; i < len; i++) {
                     unicodeChar = data[i];
+                    unicodeTable[unicodeChar.c] = unicodeChar;
 
                     // Use name as tags
                     tagsToTrigrams(unicodeChar.c, unicodeChar.n.split(" "));
