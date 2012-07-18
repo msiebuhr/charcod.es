@@ -16,7 +16,7 @@ http-pub-production: http-pub/index.html $(HTTP_PUB_FILES) http-pub/data.json
 # Set up git pages
 # (cd gh-pages; git checkout --orphan gh-pages; git rm -rf .)
 gh-pages:
-	git clone git@github.com:msiebuhr/unicodefinder.git gh-pages
+	git clone git@github.com:msiebuhr/charcod.es.git gh-pages
 	(cd gh-pages; git checkout gh-pages)
 
 commit-gh-pages: http-pub/data.json gh-pages
