@@ -43,6 +43,7 @@
     };
 
     _gaq.push(['_setAccount', 'UA-33198175-1']),
+    _gaq.push(['_setDomainName', 'charcod.es']);
     _gaq.push(['_trackPageview']),
 
     defer(('https:' === document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js');
@@ -74,6 +75,7 @@
 
                 return {
                     activate: function (elm) {
+                        _gaq.push(['_trackEvent', 'show-popup']);
                         if (active) {
                             this.deactivate();
                         }
@@ -158,6 +160,7 @@
 
         // {{{ searchAndShow(text)
         function searchAndShow(text) {
+            _gaq.push(['_trackEvent', 'search']);
             var codes = [],
                 sourceMatch = text.match(/^\\u(\d{4})$/),
                 codePointMatch = text.match(/^&#(\d+);$/) || text.match(/^(\d+)$/);
