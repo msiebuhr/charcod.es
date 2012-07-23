@@ -4,7 +4,7 @@ CURRENT_GIT:=$(shell git describe --long --tags --always --dirty 2> /dev/null|| 
 HTTP_PUB_FILES:=$(shell find http-pub -type f \! -name data.json)
 
 run: http-pub http-pub/data.json
-	(cd http-pub; python -m SimpleHTTPServer)
+	(cd $<; python -m SimpleHTTPServer)
 
 http-pub-production: http-pub/index.html $(HTTP_PUB_FILES) http-pub/data.json
 	./node_modules/.bin/buildProduction \
