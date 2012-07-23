@@ -1,7 +1,6 @@
 /*global $*/
 (function () {
-    var _gaq = _gaq || [],
-        defer = (function (document, script) {
+    var defer = (function (document, script) {
             var scripts = {},
                 firstScript = document.getElementsByTagName(script)[0];
 
@@ -42,6 +41,7 @@
         return false;
     };
 
+    _gaq = _gaq || [],
     _gaq.push(['_setAccount', 'UA-33198175-1']),
     _gaq.push(['_setDomainName', 'charcod.es']);
     _gaq.push(['_trackPageview']),
