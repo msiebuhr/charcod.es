@@ -75,7 +75,7 @@
 
                 return {
                     activate: function (elm) {
-                        _gaq.push(['_trackEvent', 'show-popup']);
+                        _gaq.push(['_trackEvent', 'popup', 'activate']);
                         if (active) {
                             this.deactivate();
                         }
@@ -93,6 +93,7 @@
                     },
 
                     deactivate: function () {
+                        _gaq.push(['_trackEvent', 'popup', 'deactivate']);
                         active.removeClass('active');
                         info.remove();
                         active = info = undefined;
