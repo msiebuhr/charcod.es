@@ -75,7 +75,13 @@ function search(text) {
     if (sortedOutput.length > 0) {
         // Sort in reverse
         sortedOutput.sort(function (a, b) {
-            return b.score - a.score;
+            // First, up those with better scores
+            if (b.score !== a.score) {
+                return b.score - a.score;
+            }
+
+            // If same score, sort "lower" codepoints before "larger" ones.
+            return a.code - b.code;
         });
 
         // Filter out low-scoring stuff.
