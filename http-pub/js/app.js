@@ -57,6 +57,9 @@
                         var info = unicodeTable[codePoint],
                             tpl = $('.templates .charInfo').clone();
 
+                        // Track the group/block of what chars people are clicking.
+                        _gaq.push(['_trackEvent', 'popup', 'activate', info.b]);
+
                         tpl.find('h2').html('&#' + codePoint + ';');
                         tpl.find('.char-html').html('&amp;#' + codePoint + ';');
                         tpl.find('.char-source').html('\\u' + (parseInt(codePoint, 10) + 0x10000).toString(16).substr(-4));
@@ -75,12 +78,12 @@
 
                 return {
                     activate: function (elm) {
-                        _gaq.push(['_trackEvent', 'popup', 'activate']);
                         if (active) {
                             this.deactivate();
                         }
                         active = elm;
                         info = getTpl(elm[0].id.replace('id', ''));
+
 
                         var offset = elm.position().top,
                             currentElement = elm;
@@ -93,7 +96,7 @@
                     },
 
                     deactivate: function () {
-                        _gaq.push(['_trackEvent', 'popup', 'deactivate']);
+                        //_gaq.push(['_trackEvent', 'popup', 'deactivate']);
                         active.removeClass('active');
                         info.remove();
                         active = info = undefined;
@@ -161,7 +164,7 @@
 
         // {{{ searchAndShow(text)
         function searchAndShow(text) {
-            _gaq.push(['_trackEvent', 'search']);
+            _gaq.push(['_trackEvent', 'search', undefined, text]);
             var codes = [],
                 sourceMatch = text.match(/^\\u(\d{4})$/),
                 codePointMatch = text.match(/^&#(\d+);$/) || text.match(/^(\d+)$/);
