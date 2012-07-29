@@ -1,4 +1,3 @@
-PHONY:=ucd.nounihan.flat.xml
 EXTRA_JSON:=$(shell find unicode -type f -name \*.json \! -name \?\?-\*-unicode.json)
 CURRENT_GIT:=$(shell git describe --long --tags --always --dirty 2> /dev/null|| echo unknown)
 HTTP_PUB_FILES:=$(shell find http-pub -type f \! -name data.json)
@@ -19,7 +18,7 @@ gh-pages:
 	git clone git@github.com:msiebuhr/charcod.es.git gh-pages
 	(cd gh-pages; git checkout gh-pages)
 
-commit-gh-pages: http-pub/data.json gh-pages
+commit-gh-pages: http-pub/data.json gh-pages http-pub-production
 	(cd gh-pages; git pull origin gh-pages)
 	cp http-pub-production/* gh-pages/
 	(cd gh-pages; git add .; git commit --edit --message="Publish master@$(CURRENT_GIT).")
@@ -42,7 +41,7 @@ unicode/00-base-unicode.json: ucd.nounihan.flat.xml ucd-xml2json.js
 	./ucd-xml2json.js -i $< -o $@
 
 http-pub/data.json: unicode/00-base-unicode.json unicode/01-w3c-unicode.json $(EXTRA_JSON) compact-json.js
-	./compact-json.js -o $@ unicode/00-base-unicode.json unicode/01-w3c-unicode.json $(EXTRA_JSON)
+	./compact-json.js -o $@ $^
 
 clean:
 	rm -rf http-pub/data.json
