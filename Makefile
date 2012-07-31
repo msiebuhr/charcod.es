@@ -41,7 +41,7 @@ unicode/00-base-unicode.json: ucd.nounihan.flat.xml ucd-xml2json.js
 	./ucd-xml2json.js -i $< -o $@
 
 http-pub/data.json: unicode/00-base-unicode.json unicode/01-w3c-unicode.json $(EXTRA_JSON) compact-json.js
-	./compact-json.js -o $@ $^
+	./compact-json.js -o $@ unicode/00-base-unicode.json unicode/01-w3c-unicode.json $(EXTRA_JSON)
 
 clean:
 	rm -rf http-pub/data.json
