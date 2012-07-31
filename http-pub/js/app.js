@@ -61,8 +61,16 @@
                         _gaq.push(['_trackEvent', 'popup', 'activate', info.b]);
 
                         tpl.find('h2').html('&#' + codePoint + ';');
-                        tpl.find('.char-html').html('&amp;#' + codePoint + ';');
+                        // Set HTML names
+                        var htmlCodes = [ '&amp;#' + codePoint + ';' ];
+                        if (info.altnames && info.altnames.html) {
+                            htmlCodes.push('&amp;#' + info.altnames.html + ';');
+                        }
+                        tpl.find('.char-html').html(htmlCodes.join("<br>"));
+
+                        // Source code name
                         tpl.find('.char-source').html('\\u' + (parseInt(codePoint, 10) + 0x10000).toString(16).substr(-4));
+                        // Code point
                         tpl.find('.char-codepoint').html(codePoint);
 
                         if (info) {
@@ -71,6 +79,13 @@
                             if (info.a && info.a.length > 0) {
                                 tpl.find(".aliases").html(info.a.join(', '));
                             }
+                        }
+
+                        // LaTeX names
+                        if (info.altnames && info.altnames.latex) {
+                            tpl.find('.char-latex').html(info.altnames.latex);
+                        } else {
+                            tpl.find('.char-latex-row').hide();
                         }
 
                         return tpl;
