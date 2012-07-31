@@ -13,6 +13,7 @@
  *     {
  *         { "→": { "alias": ["->", "arrow"] },
  *         { "…": { "alias": ["...", "dots"] },
+ *         { "…": { "altnames": {"latex": "\dots"} },
  *         …
  *     }
  *
@@ -23,6 +24,7 @@
  *             n: "lowercase unicode name"
  *             b: "unicode block"
  *             a: ["alias", "can", "be", "here"]
+ *             altnames: {"alternative": "name", "latex": "\dots"}
  *         },
  *         …
  *     ]
@@ -52,9 +54,14 @@ jsonStream.pipe(output);
 
 function verbose2compact(obj, key) {
     var out = {};
+
+    // Copy properties
     if ('alias' in obj) { out.a = obj.alias; }
     if ('name' in obj) { out.n = obj.name; }
     if ('block' in obj) { out.b = obj.block; }
+    if ('altnames' in obj) { out.altnames = obj.altnames; }
+
+    // Copy code -- or decode it from the key.
     if ('code' in obj) { out.c = obj.code; }
     else if (key) { out.c = key.charCodeAt(0); }
 
@@ -69,6 +76,9 @@ function mergeCompact(existing, added) {
     // Update alia
     if (existing.a || added.a) {
         existing.a = _.union(existing.a || [], added.a || []);
+    }
+    if (existing.altnames || added.altnames) {
+        existing.altnames = _.defaults({}, existing.altnames || {}, added.altnames || {});
     }
 
     return existing;
