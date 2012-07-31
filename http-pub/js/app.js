@@ -164,6 +164,13 @@
                     if (unicodeChar.a) {
                         tagsToTrigrams(unicodeChar.c, unicodeChar.a);
                     }
+
+                    // Index alternative names
+                    if (unicodeChar.altnames) {
+                        for(var name in unicodeChar.altnames) {
+                            tagsToTrigrams(unicodeChar.c, [unicodeChar.altnames[name]]);
+                        }
+                    }
                 }
 
                 // Search right away if the user has already typed something
