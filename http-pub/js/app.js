@@ -211,7 +211,10 @@
             }
 
             $("#results").html($.map(codes, function (code) {
-                return '<a href="#id' + code + '" id="id' + code + '">&#' + code + ';</a>';
+                var combining = unicodeTable[code].n.indexOf('combining') !== -1,
+                    outHtml = (combining ? "&#9676;" : "") + "&#" + code + ";";
+
+                return '<a href="#id' + code + '" id="id' + code + '">' + outHtml + '</a>';
             }).join(""));
 
             // If there is only one result, show details right away
