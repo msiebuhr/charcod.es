@@ -59,9 +59,10 @@ parser.on('endElement', function (name) {
             jsonStream.write([fixedFromCharCode(currentChar.code), currentChar]);
         }
     } else if (name === 'latex') {
+        // Save the alternate name for LaTeX...
         if (currentText.match(/^\\/)) {
             currentChar.altnames = currentChar.altnames || {}
-            currentChar.altnames.latex = currentText;
+            currentChar.altnames.latex = currentText.replace(/^\s+|\s+$/g, '');
         }
     } else if (name === 'unicode') {
         jsonStream.end();
