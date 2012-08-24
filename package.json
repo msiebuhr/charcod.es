@@ -10,7 +10,8 @@
       "underscore": "*"
   },
   "devDependencies": {
-      "assetgraph-builder": "*"
+      "assetgraph-builder": "*",
+      "less": "*"
   },
   "optionalDependencies": {},
   "engines": {
