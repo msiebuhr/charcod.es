@@ -1,10 +1,14 @@
+@import "colors.less";
+
 .charInfo {
     clear: both;
     padding: 20px;
     margin: 3px -3px;
-    background-color: #EEE;
-    border: 3px solid rgba(82,168,236,0.1);
+    background-color: white;
+    border: 3px solid @border_blue;
     overflow: auto;
+
+	color: @dark_blue;
 
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
@@ -38,7 +42,7 @@
 }
 
 .charInfo table {
-    border: 1px solid #666;
+    /*border: 1px solid #666;*/
     padding: 10px;
 }
 
@@ -51,3 +55,6 @@
 .charInfo td {
 	font-family: monospace;
 }
+
+/* ex: filetype=css
+ */

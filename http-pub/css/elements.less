@@ -1,8 +1,11 @@
+@import "colors.less";
+
 body {
     margin: 0;
+	background: url('/img/background_white.jpg');
 }
 
-h1, h2, h3, h4, h5, h6 {    
+h1, h2, h3, h4, h5, h6 {
     margin-top: 0;
     margin-bottom: 0.5em;
 }
@@ -46,6 +49,10 @@ a:hover, a:active {
     outline: 0;
 }
 a {
-    color: #08c;
+    /*color: #08c;*/
+    color: @border_blue;
     text-decoration: none;
 }
+
+/* ex: filetype=css
+ */
