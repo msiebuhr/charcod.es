@@ -60,7 +60,8 @@
                         // Track the group/block of what chars people are clicking.
                         _gaq.push(['_trackEvent', 'popup', 'activate', info.b]);
 
-                        tpl.find('h2').html('&#' + codePoint + ';');
+                        var combining = unicodeTable[codePoint].n.indexOf('combining') !== -1;
+                        tpl.find('h2').html((combining ? "&#9676;" : "") +'&#' + codePoint + ';');
                         // Set HTML names
                         var htmlCodes = [ '&amp;#' + codePoint + ';' ];
                         if (info.altnames && info.altnames.html) {
