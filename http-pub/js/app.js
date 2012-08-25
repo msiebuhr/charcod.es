@@ -1,5 +1,31 @@
 /*global $*/
 (function () {
+    function highSurrogate(codePoint) {
+        return Math.floor((codePoint - 0x10000) / 0x400) + 0xD800;
+    }
+
+    function lowSurrogate(codePoint) {
+        return (codePoint - 0x10000) % 0x400 + 0xDC00;
+    }
+
+    function unicodeEscape(codePoint) {
+        if (codePoint <= 0xFFFF) {
+            return '\\u' + (codePoint + 0x10000).toString(16).substr(-4).toUpperCase();
+        } else {
+            throw 'Code point outside BMP cannot be encoded.';
+        }
+    }
+
+    function codePointToString(codePoint) {
+        if (codePoint <= 0xFFFF) {
+            // Anything inside the BMP can be escaped as usual
+            return unicodeEscape(codePoint);
+        } else {
+            // Outside the BMP we generate surrogate pairs
+            return unicodeEscape(highSurrogate(codePoint)) + unicodeEscape(lowSurrogate(codePoint));
+        }
+    }
+
     var defer = (function (document, script) {
             var scripts = {},
                 firstScript = document.getElementsByTagName(script)[0];
@@ -69,7 +95,7 @@
                         tpl.find('.char-html').html(htmlCodes.join("<br>"));
 
                         // Source code name
-                        tpl.find('.char-source').html('\\u' + (parseInt(codePoint, 10) + 0x10000).toString(16).substr(-4));
+                        tpl.find('.char-source').html(codePointToString(parseInt(codePoint, 10)));
                         // Code point
                         tpl.find('.char-codepoint').html(codePoint);
 
