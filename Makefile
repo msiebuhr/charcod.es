@@ -29,11 +29,11 @@ push-gh-pages:
 	(cd gh-pages; git push origin gh-pages)
 
 ucd.nounihan.flat.xml:
-	wget -q -c http://www.unicode.org/Public/6.1.0/ucdxml/ucd.nounihan.flat.zip -O /tmp/ucd.nounihan.flat.zip
+	cat /tmp/ucd.nounihan.flat.zip | curl -s -C - http://www.unicode.org/Public/6.1.0/ucdxml/ucd.nounihan.flat.zip > /tmp/ucd.nounihan.flat.zip
 	unzip -p /tmp/ucd.nounihan.flat.zip > $@
 
 w3c-unicode.xml:
-	wget -q -c http://www.w3.org/2003/entities/2007xml/unicode.xml -O $@
+	cat $@ | curl -s -C - http://www.w3.org/2003/entities/2007xml/unicode.xml > $@
 
 unicode/01-w3c-unicode.json: w3c-unicode.xml w3c-xml2json.js
 	./w3c-xml2json.js -i $< -o $@
