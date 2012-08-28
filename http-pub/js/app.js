@@ -146,6 +146,18 @@
                 }
             }());
 
+        window.onpopstate = function (e) {
+            // Stolen from https://developer.mozilla.org/en-US/docs/DOM/window.location
+            function loadPageVar (sVar) {
+                return unescape(window.location.search.replace(new RegExp("^(?:.*[&\\?]" + escape(sVar).replace(/[\.\+\*]/g, "\\$&") + "(?:\\=([^&]*))?)?.*$", "i"), "$1"));
+            }
+
+            // Chrome insists on adding a trailing slash...
+            var query = loadPageVar("q").replace(/\/$/, "");
+            $("#searchField").val(query);
+        };
+        window.onpopstate();
+
         // Click-handler that show a modal dialog
         $('#results').on('click', 'a', function (e) {
             popup.activate($(e.target));
