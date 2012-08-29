@@ -1,4 +1,4 @@
-/*global $*/
+/*global $, _gaq, unescape, escape, tagsToTrigrams, search*/
 (function () {
     function highSurrogate(codePoint) {
         return Math.floor((codePoint - 0x10000) / 0x400) + 0xD800;
@@ -67,8 +67,8 @@
         return false;
     };
 
-    _gaq = window._gaq || [],
-    _gaq.push(['_setAccount', 'UA-33198175-1']),
+    _gaq = window._gaq || [];
+    _gaq.push(['_setAccount', 'UA-33198175-1']);
     _gaq.push(['_setDomainName', 'charcod.es']);
     _gaq.push(['_trackPageview']),
 
@@ -81,19 +81,14 @@
                     info,
                     getTpl = function (codePoint) {
                         var info = unicodeTable[codePoint],
-                            tpl = $('.templates .charInfo').clone();
+                            tpl = $('.templates .charInfo').clone(),
+                            combining = unicodeTable[codePoint] && unicodeTable[codePoint].n.indexOf('combining') !== -1,
+                            htmlCodes = [ '&amp;#' + codePoint + ';' ],
+                            permaLink = location.href.replace(/#.*$/, '#' + codePoint);
 
-                        // Track the group/block of what chars people are clicking.
-                        _gaq.push(['_trackEvent', 'popup', 'activate', info.b]);
 
-                        var combining = unicodeTable[codePoint].n.indexOf('combining') !== -1;
-                        tpl.find('h2').html((combining ? "&#9676;" : "") +'&#' + codePoint + ';');
-                        // Set HTML names
-                        var htmlCodes = [ '&amp;#' + codePoint + ';' ];
-                        if (info.altnames && info.altnames.html) {
-                            htmlCodes.push('&amp;#' + info.altnames.html + ';');
-                        }
-                        tpl.find('.char-html').html(htmlCodes.join("<br>"));
+                        tpl.find('h2').html((combining ? "&#9676;" : "") + '&#' + codePoint + ';');
+                        tpl.find('.permalink').attr('href', permaLink).html(permaLink);
 
                         // Source code name
                         tpl.find('.char-source').html(codePointToString(parseInt(codePoint, 10)));
@@ -106,13 +101,22 @@
                             if (info.a && info.a.length > 0) {
                                 tpl.find(".aliases").html(info.a.join(', '));
                             }
-                        }
 
-                        // LaTeX names
-                        if (info.altnames && info.altnames.latex) {
-                            tpl.find('.char-latex').html(info.altnames.latex);
-                        } else {
-                            tpl.find('.char-latex-row').hide();
+                            // Set HTML names
+                            if (info.altnames && info.altnames.html) {
+                                htmlCodes.push('&amp;#' + info.altnames.html + ';');
+                            }
+                            tpl.find('.char-html').html(htmlCodes.join("<br>"));
+
+                            // Track the group/block of what chars people are clicking.
+                            _gaq.push(['_trackEvent', 'popup', 'activate', info.b]);
+
+                            // LaTeX names
+                            if (info.altnames && info.altnames.latex) {
+                                tpl.find('.char-latex').html(info.altnames.latex);
+                            } else {
+                                tpl.find('.char-latex-row').hide();
+                            }
                         }
 
                         return tpl;
@@ -120,21 +124,23 @@
 
                 return {
                     activate: function (elm) {
+                        var codePoint = elm[0].id.replace('id', ''),
+                            offset = elm.position().top,
+                            currentElement = elm;
+
                         if (active) {
                             this.deactivate();
                         }
                         active = elm;
-                        info = getTpl(elm[0].id.replace('id', ''));
+                        info = getTpl(codePoint);
 
-
-                        var offset = elm.position().top,
-                            currentElement = elm;
                         while (currentElement.next().length && currentElement.next().position().top === offset) {
                             currentElement = currentElement.next();
                         }
                         info.insertAfter(currentElement);
 
                         active.addClass('active');
+                        location.hash = codePoint;
                     },
 
                     deactivate: function () {
@@ -143,21 +149,21 @@
                         info.remove();
                         active = info = undefined;
                     }
-                }
+                };
             }());
-
+/*
         window.onpopstate = function (e) {
             // Stolen from https://developer.mozilla.org/en-US/docs/DOM/window.location
-            function loadPageVar (sVar) {
+            function loadPageVar(sVar) {
                 return unescape(window.location.search.replace(new RegExp("^(?:.*[&\\?]" + escape(sVar).replace(/[\.\+\*]/g, "\\$&") + "(?:\\=([^&]*))?)?.*$", "i"), "$1"));
             }
 
             // Chrome insists on adding a trailing slash...
-            var query = loadPageVar("q").replace(/\/$/, "");
-            $("#searchField").val(query);
+            //var query = loadPageVar("q").replace(/\/$/, "");
+            //$("#searchField").val(query);
         };
         window.onpopstate();
-
+*/
         // Click-handler that show a modal dialog
         $('#results').on('click', 'a', function (e) {
             popup.activate($(e.target));
@@ -189,9 +195,10 @@
             success: function (data) {
                 var i = 0,
                     len = data.length,
-                    unicodeChar;
+                    unicodeChar,
+                    name;
 
-                for (; i < len; i++) {
+                for (; i < len; i += 1) {
                     unicodeChar = data[i];
                     unicodeTable[unicodeChar.c] = unicodeChar;
 
@@ -206,7 +213,7 @@
 
                     // Index alternative names
                     if (unicodeChar.altnames) {
-                        for(var name in unicodeChar.altnames) {
+                        for (name in unicodeChar.altnames) {
                             tagsToTrigrams(unicodeChar.c, [unicodeChar.altnames[name]]);
                         }
                     }
@@ -244,13 +251,13 @@
 
             // Show help?
             if (codes.length === 0) {
-                $("#help").show()
+                $("#help").show();
             } else {
-                $("#help").hide()
+                $("#help").hide();
             }
 
             $("#results").html($.map(codes, function (code) {
-                var combining = unicodeTable[code].n.indexOf('combining') !== -1,
+                var combining = unicodeTable[code] && unicodeTable[code].n.indexOf('combining') !== -1,
                     outHtml = (combining ? "&#9676;" : "") + "&#" + code + ";";
 
                 return '<a href="#id' + code + '" id="id' + code + '">' + outHtml + '</a>';
@@ -262,5 +269,9 @@
             }
         }
         // }}} searchAndShow(text)
+        if (location.hash) {
+            searchField.val(location.hash.split('#')[1]);
+            searchAndShow(location.hash.split('#')[1]);
+        }
     });
 }());
