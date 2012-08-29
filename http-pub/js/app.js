@@ -1,5 +1,24 @@
 /*global $, _gaq, unescape, escape, tagsToTrigrams, search*/
 (function () {
+    /* Determine if `text` is a char-code short-cut of some sort or a plain
+     * search-term.
+     */
+    function isCharCode(text) {
+        var sourceMatch = text.match(/^\\u([\dABCDEFabcdef]{4})$/),
+            codePointMatch = text.match(/^&#(\d+);$/) || text.match(/^(\d+)$/),
+            code = undefined;
+
+        if (sourceMatch) {
+            code = parseInt(sourceMatch[1], 16);
+        } else if (codePointMatch) {
+            code = codePointMatch[1];
+        } else if (text.length === 1) {
+            code = text.charCodeAt(0);
+        }
+
+        return code;
+    }
+
     function highSurrogate(codePoint) {
         return Math.floor((codePoint - 0x10000) / 0x400) + 0xD800;
     }
@@ -258,8 +277,44 @@
         }
         // }}} searchAndShow(text)
         if (location.hash) {
-            searchField.val(location.hash.split('#')[1]);
-            searchAndShow(location.hash.split('#')[1]);
+            var h = location.hash.split('#')[1];
+
+            // Two elements → search-term/char-to-highlight
+            // One element → char-to-highlight (if it matches a char)
+            //               otherwise, consider it a search term
+
+            var test = h.match(/^([^\/]+)\/(.*)$/),
+                isCode = isCharCode(h),
+                searchTerm = undefined,
+                highlight = undefined;
+
+            if (test) {
+                searchTerm = test[1];
+                highlight = test[2];
+            } else if (isCode) {
+                searchTerm = highlight = isCode;
+            } else {
+                searchTerm = h;
+                highlight = undefined;
+            }
+
+            if (highlight && searchTerm === undefined) {
+                searchTerm = highlight;
+            }
+
+            console.log("searchTerm", searchTerm);
+            console.log("highlight", highlight)
+
+            searchField.val(searchTerm);
+            searchAndShow(searchTerm);
+
+            // Find the 'highlight'-element and activate the popup
+            if (highlight) {
+                var elem = $('#id' + highlight);
+                if (elem.length > 0) {
+                    popup.activate(elem[0]);
+                }
+            }
         }
     });
 }());
