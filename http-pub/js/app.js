@@ -84,7 +84,7 @@
                             tpl = $('.templates .charInfo').clone(),
                             combining = unicodeTable[codePoint] && unicodeTable[codePoint].n.indexOf('combining') !== -1,
                             htmlCodes = [ '&amp;#' + codePoint + ';' ],
-                            permaLink = location.href.replace(/#.*$/, '#' + codePoint);
+                            permaLink = location.href.replace(/(#.*)?$/, '#' + codePoint);
 
 
                         tpl.find('h2').html((combining ? "&#9676;" : "") + '&#' + codePoint + ';');
