@@ -159,7 +159,14 @@
                         info.insertAfter(currentElement);
 
                         active.addClass('active');
-                        location.hash = codePoint;
+
+                        // Set location-hash intelligently
+                        var searchTerm = $('#searchField').val();
+                        if (searchTerm === codePoint) {
+                            location.hash = searchTerm;
+                        } else {
+                            location.hash = searchTerm + '/' + codePoint;
+                        }
                     },
 
                     deactivate: function () {
@@ -230,6 +237,9 @@
                 if (searchField.val()) {
                     searchAndShow(searchField.val());
                 }
+
+                // Re-apply location hash, so stuff will show up.
+                applyLocationHash();
             },
             error: function () {
                 throw new Error("could not load data.json: " + arguments);
@@ -276,7 +286,12 @@
             }
         }
         // }}} searchAndShow(text)
-        if (location.hash) {
+
+        // {{{ applyLocationHash()
+        function applyLocationHash() {
+            if (!location.hash) {
+                return;
+            }
             var h = location.hash.split('#')[1];
 
             // Two elements → search-term/char-to-highlight
@@ -309,12 +324,17 @@
             searchAndShow(searchTerm);
 
             // Find the 'highlight'-element and activate the popup
+            console.log('#id' + highlight);
+            console.log($('#id' + highlight));
             if (highlight) {
-                var elem = $('#id' + highlight);
-                if (elem.length > 0) {
-                    popup.activate(elem[0]);
+                var elem = $('#id' + highlight).first();
+                if (elem) {
+                    popup.activate(elem);
                 }
             }
         }
+        // }}} applyLocationHash()
+
+        applyLocationHash();
     });
 }());
