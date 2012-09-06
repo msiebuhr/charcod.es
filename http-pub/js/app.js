@@ -102,12 +102,21 @@
                         var info = unicodeTable[codePoint],
                             tpl = $('.templates .charInfo').clone(),
                             combining = unicodeTable[codePoint] && unicodeTable[codePoint].n.indexOf('combining') !== -1,
-                            htmlCodes = [ '&amp;#' + codePoint + ';' ],
-                            permaLink = location.href.replace(/(#.*)?$/, '#' + codePoint);
+                            htmlCodes = [ '&amp;#' + codePoint + ';' ];
 
+
+
+                        // Set location-hash intelligently
+                        var searchTerm = $('#searchField').val(),
+                            permaLink = searchTerm + '/' + codePoint,
+                            permaLinkChar = codePoint;
+                        if (searchTerm === codePoint) {
+                            permaLink = codePoint;
+                        }
+                        location.hash = '#' + permaLink;
 
                         tpl.find('h2').html((combining ? "&#9676;" : "") + '&#' + codePoint + ';');
-                        tpl.find('.permalink').attr('href', permaLink).html(permaLink);
+                        tpl.find('.permalink').attr('href', '#' + permaLinkChar);
 
                         // Source code name
                         tpl.find('.char-source').html(codePointToString(parseInt(codePoint, 10)));
@@ -160,13 +169,6 @@
 
                         active.addClass('active');
 
-                        // Set location-hash intelligently
-                        var searchTerm = $('#searchField').val();
-                        if (searchTerm === codePoint) {
-                            location.hash = searchTerm;
-                        } else {
-                            location.hash = searchTerm + '/' + codePoint;
-                        }
                     },
 
                     deactivate: function () {
