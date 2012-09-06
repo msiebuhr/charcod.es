@@ -125,7 +125,10 @@
 
                         if (info) {
                             tpl.find('h3').html(info.n);
-                            tpl.find('.char-group').html(info.b);
+                            // TODO: Just changes URL - doesn't currently act on it!
+                            tpl.find('.char-group')
+                                .attr('href', '#' + info.b)
+                                .html(info.b);
                             if (info.a && info.a.length > 0) {
                                 tpl.find(".aliases").html(info.a.join(', '));
                             }
