@@ -177,7 +177,9 @@
                     deactivate: function () {
                         //_gaq.push(['_trackEvent', 'popup', 'deactivate']);
                         active.removeClass('active');
-                        info.remove();
+                        if (info) {
+                            info.remove();
+                        }
                         active = info = undefined;
                     }
                 };
@@ -322,15 +324,10 @@
                 searchTerm = highlight;
             }
 
-            console.log("searchTerm", searchTerm);
-            console.log("highlight", highlight)
-
             searchField.val(searchTerm);
             searchAndShow(searchTerm);
 
             // Find the 'highlight'-element and activate the popup
-            console.log('#id' + highlight);
-            console.log($('#id' + highlight));
             if (highlight) {
                 var elem = $('#id' + highlight).first();
                 if (elem) {
@@ -340,6 +337,11 @@
         }
         // }}} applyLocationHash()
 
+        window.onhashchange = function (changeEvent) {
+            if (changeEvent.newURL !== changeEvent.oldURL) {
+                applyLocationHash();
+            }
+        };
         applyLocationHash();
     });
 }());
