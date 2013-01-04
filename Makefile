@@ -2,6 +2,11 @@ EXTRA_JSON:=$(shell find unicode -type f -name \*.json \! -name \?\?-\*-unicode.
 CURRENT_GIT:=$(shell git describe --long --tags --always --dirty 2> /dev/null|| echo unknown)
 HTTP_PUB_FILES:=$(shell find http-pub -type f \! -name data.json)
 
+.PHONY:test
+
+test: http-pub/data.json
+	./node_modules/.bin/mocha -R spec
+
 run: http-pub http-pub/data.json
 	(cd $<; python -m SimpleHTTPServer)
 
