@@ -4,14 +4,17 @@
   "description": "Small website for finding useful unicode stuff",
   "version": "0.0.0",
   "dependencies": {
-      "JSONStream": "*",
-      "node-expat": "*",
-      "optimist": "*",
-      "underscore": "*"
+    "JSONStream": "*",
+    "node-expat": "*",
+    "optimist": "*",
+    "underscore": "*",
+    "requirejs": "~2.1.2",
+    "chai": "~1.4.2",
+    "mocha": "~1.7.4"
   },
   "devDependencies": {
-      "assetgraph-builder": "*",
-      "less": "*"
+    "assetgraph-builder": "*",
+    "less": "*"
   },
   "optionalDependencies": {},
   "engines": {

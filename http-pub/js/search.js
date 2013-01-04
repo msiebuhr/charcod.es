@@ -1,103 +1,108 @@
-var trigramTable = {};
-
-        // {{{ wordToTrigrams(word)
-        function wordToTrigrams(word) {
-            if (word.length === 0) {
-                return [];
-            } else if (word.length < 3) {
-                return [word];
-            }
-            var triGrams = [];
-            for (var i = 0; i <= word.length - 3; i += 1) {
-                triGrams.push(word.substr(i, 3));
-            }
-            return triGrams;
+define(function (util) {
+    // {{{ wordToTrigrams(word)
+    function wordToTrigrams(word) {
+        word = word.toLowerCase();
+        if (word.length === 0) {
+            return [];
+        } else if (word.length < 3) {
+            return [word];
         }
-        // }}}
-
-// {{{ tagsToTrigrams(unicodeChar, tag)
-function tagsToTrigrams(unicodeChar, tags) {
-    var i = 0,
-    len = tags.length;
-
-    for (; i < len; i += 1) {
-        tagToTrigrams(unicodeChar, tags[i]);
+        var triGrams = [];
+        for (var i = 0; i <= word.length - 3; i += 1) {
+            triGrams.push(word.substr(i, 3));
+        }
+        return triGrams;
     }
-}
-// }}}
+    // }}}
 
-// {{{ tagToTrigrams(unicodeChar, tag)
-function tagToTrigrams(unicodeChar, tag) {
-    var trigrams = wordToTrigrams(tag),
-    i = 0,
-    len = trigrams.length,
-    trigram;
-
-    for (; i < len; i += 1) {
-        trigram = trigrams[i];
-        if (!trigramTable[trigram]) {
-            trigramTable[trigram] = [];
-        }
-        trigramTable[trigram].push(unicodeChar);
+    function Search() {
+        this.trigramTable = {};
+        this.resultIndex = [];
     }
-}
-// }}}
 
-// {{{ search
-function search(text) {
-    var words = text.toLowerCase().split(" "),
-    triGrams = [],
-    charCodesFound = {};
+    /* External functions */
+    // {{{ addTerm(words, data)
+    Search.prototype.addTerm = function (words, data) {
+        var trigrams = {};
 
-    // Convert search terms to tri-grams
-    $.each(words, function (index, word) {
-        triGrams = triGrams.concat(wordToTrigrams(word));
-    });
+        // Push result on output index;
+        this.resultIndex.push(data); 
 
-    // Look up tri-grams
-    $.each(triGrams, function (index, triGram) {
-        if (triGram in trigramTable) {
-            var charCodes = trigramTable[triGram];
-            for (var i = 0; i < charCodes.length; i += 1) {
-                var charCode = charCodes[i];
-                charCodesFound[charCode] = charCodesFound[charCode] || 0;
-                charCodesFound[charCode] = charCodesFound[charCode] + 1;
+        // Note - we don't check if we push the same data multiple times.
+        for (var i = 0; i < words.length; i += 1) {
+            var trigrams = wordToTrigrams(words[i]);
+            for (var j = 0; j < trigrams.length; j += 1) {
+                var trigram = trigrams[j];
+                if (!(trigram in this.trigramTable)) { this.trigramTable[trigram] = []; }
+                this.trigramTable[trigram].push(this.resultIndex.length - 1);
             }
         }
-    });
+    };
+    // }}}
 
-    // Score the results for how many matches there were
-    var sortedOutput = [];
-    $.each(charCodesFound, function (charCode, matchingTriGrams) {
-        sortedOutput.push({code: charCode, score: matchingTriGrams});
-    });
+    // {{{ search(text, maxResults)
+    Search.prototype.search = function (text, maxResults) {
+        var that = this,
+            words = text.toLowerCase().split(" "),
+            maxResults = maxResults || 12 * 25,
+            triGrams = [],
+            charCodesFound = {};
 
-    if (sortedOutput.length > 0) {
-        // Sort in reverse
-        sortedOutput.sort(function (a, b) {
-            // First, up those with better scores
-            if (b.score !== a.score) {
-                return b.score - a.score;
-            }
-
-            // If same score, sort "lower" codepoints before "larger" ones.
-            return a.code - b.code;
+        // Convert search terms to tri-grams
+        words.forEach(function (word, index) {
+            triGrams = triGrams.concat(wordToTrigrams(word));
         });
 
-        // Filter out low-scoring stuff.
-        var cutoffScore = Math.ceil(sortedOutput[0].score / 2);
-        sortedOutput = $.map(sortedOutput, function (data, index) {
-            if (data.score > cutoffScore || index < 12 * 25) {
-                return data;
+        // Look up tri-grams
+        triGrams.forEach(function (triGram) {
+            if (triGram in that.trigramTable) {
+                var charCodes = that.trigramTable[triGram];
+
+                for (var i = 0; i < charCodes.length; i += 1) {
+                    var charCode = charCodes[i];
+                    charCodesFound[charCode] = charCodesFound[charCode] || 0;
+                    charCodesFound[charCode] = charCodesFound[charCode] + 1;
+                }
             }
         });
 
-        // Strip everything but the actual code
-        return $.map(sortedOutput, function (data) {
-            return data.code;
-        });
-    }
+        // Score the results for how many matches there were
+        var sortedOutput = [];
+        for (var charCode in charCodesFound) {
+            sortedOutput.push({ code: charCode, score: charCodesFound[charCode] });
+        }
 
-    return [];
-}
-// }}}
+        if (sortedOutput.length > 0) {
+        /*
+            // Sort in reverse
+            sortedOutput.sort(function (a, b) {
+                // First, up those with better scores
+                if (b.score !== a.score) {
+                    return b.score - a.score;
+                }
+
+                // If same score, sort "lower" codepoints before "larger" ones.
+                return a.code - b.code;
+            });
+
+            // Filter out low-scoring stuff.
+            var cutoffScore = Math.ceil(sortedOutput[0].score / 2);
+            sortedOutput = sortedOutput.map(function (data, index) {
+                if (data.score > cutoffScore || index < maxResults) {
+                    return data;
+                }
+            });
+        */
+
+            // Strip everything but the actual code
+            return sortedOutput.map(function (data) {
+                return that.resultIndex[data.code];
+            });
+        }
+
+        return [];
+    }
+    // }}}
+
+    return Search;
+});
