@@ -73,7 +73,6 @@ define(function (util) {
         }
 
         if (sortedOutput.length > 0) {
-        /*
             // Sort in reverse
             sortedOutput.sort(function (a, b) {
                 // First, up those with better scores
@@ -87,15 +86,13 @@ define(function (util) {
 
             // Filter out low-scoring stuff.
             var cutoffScore = Math.ceil(sortedOutput[0].score / 2);
-            sortedOutput = sortedOutput.map(function (data, index) {
-                if (data.score > cutoffScore || index < maxResults) {
-                    return data;
-                }
-            });
-        */
+            var shortOutput = [];
+            for (var i = 0; i < sortedOutput.length && i < maxResults; i += 1) {
+                shortOutput.push(sortedOutput[i]);
+            }
 
             // Strip everything but the actual code
-            return sortedOutput.map(function (data) {
+            return shortOutput.map(function (data) {
                 return that.resultIndex[data.code];
             });
         }

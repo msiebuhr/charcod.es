@@ -91,9 +91,17 @@ describe('Search', function () {
                 });
             });
 
-            it.skip('Search for "hammer" returns data', function () {
+            it('Search for "hammer" include "hammer and pick"-code', function () {
                 var res = s.search('hammer');
                 assert.isArray(res);
+                var found = false;
+                for (var i = 0; i < res.length; i += 1) {
+                    if (res[i].n === 'hammer and pick') {
+                        found = true;
+                        break;
+                    }
+                }
+                assert(found, "'hammer and pick' not found");
             });
 
             it('Search for "TOMATO" returns "tomato"-char', function () {
@@ -106,6 +114,16 @@ describe('Search', function () {
                 assert(found, "{n: tomato ...} not found");
             });
 
+            it("Search with maxResults=1 return only one result", function () {
+                assert.lengthOf(s.search('arrow', 1), 1);
+            });
+
+            it("Search for arrow returns 'arrow'-stuff on top", function () {
+                var res = s.search('arrow');
+
+                assert(res.length > 0, "Got no results!");
+                assert(res[0].n.indexOf('arrow') !== -1, "First result does not include 'arrow'");
+            });
         });
     });
     // }}}
