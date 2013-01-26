@@ -69,8 +69,10 @@ describe('Search', function () {
             assert.isArray(data);
         });
 
-        it.skip("Has n (name) on objects", function () {
-            data.forEach(function (datum) { assert.property(datum, 'n'); });
+        it("Has n (name) on objects", function () {
+            for(var i = 0; i < data.length; i += 1) {
+                assert('n' in data[i]);
+            }
         });
 
         describe('Load the search index', function () {
