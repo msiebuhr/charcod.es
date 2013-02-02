@@ -32898,7 +32898,7 @@
 {"n":"mathematical sans-serif italic capital e","b":"math_alphanum","c":120332,"altnames":{"latex":"\\mathsfsl{E}"}},
 {"n":"mathematical sans-serif italic capital f","b":"math_alphanum","c":120333,"altnames":{"latex":"\\mathsfsl{F}"}},
 {"n":"mathematical sans-serif italic capital g","b":"math_alphanum","c":120334,"altnames":{"latex":"\\mathsfsl{G}"}},
-{"n":"mathematical sans-serif italic capital h","b":"math_alphanum","c":120335},
+{"n":"mathematical sans-serif italic capital h","b":"math_alphanum","c":120335,"altnames":{"latex":"\\mathsfsl{H}"}},
 {"n":"mathematical sans-serif italic capital i","b":"math_alphanum","c":120336,"altnames":{"latex":"\\mathsfsl{I}"}},
 {"n":"mathematical sans-serif italic capital j","b":"math_alphanum","c":120337,"altnames":{"latex":"\\mathsfsl{J}"}},
 {"n":"mathematical sans-serif italic capital k","b":"math_alphanum","c":120338,"altnames":{"latex":"\\mathsfsl{K}"}},

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">
+	<ShortName>Charcodes</ShortName>
+	<Description>Unicode for fun and profit!</Description>
+	<Tags>unicode charcode chars</Tags>
+	<Url
+		method="get"
+		type="text/html"
+		template="http://charcod.es/#{searchTerms}"/>
+</OpenSearchDescription>
