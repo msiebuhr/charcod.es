@@ -53,12 +53,10 @@ require(['search'], function (Search) {
         return false;
     };
 
-    /*
     _gaq = window._gaq || [];
     _gaq.push(['_setAccount', 'UA-33198175-1']);
     _gaq.push(['_setDomainName', 'charcod.es']);
     _gaq.push(['_trackPageview']);
-    */
 
     var unicodeTable = {},
         popup = (function () {
@@ -106,7 +104,7 @@ require(['search'], function (Search) {
                         tpl.find('.char-html').html(htmlCodes.join("<br>"));
 
                         // Track the group/block of what chars people are clicking.
-                        //_gaq.push(['_trackEvent', 'popup', 'activate', info.b]);
+                        _gaq.push(['_trackEvent', 'popup', 'activate', info.b]);
 
                         // LaTeX names
                         if (info.altnames && info.altnames.latex) {
@@ -141,7 +139,7 @@ require(['search'], function (Search) {
                 },
 
                 deactivate: function () {
-                    //_gaq.push(['_trackEvent', 'popup', 'deactivate']);
+                    _gaq.push(['_trackEvent', 'popup', 'deactivate']);
                     active.removeClass('active');
                     if (info) {
                         info.remove();
@@ -226,7 +224,7 @@ require(['search'], function (Search) {
 
     // {{{ searchAndShow(text)
     function searchAndShow(text) {
-        //_gaq.push(['_trackEvent', 'search', undefined, text]);
+        _gaq.push(['_trackEvent', 'search', undefined, text]);
         var codes = [],
             sourceMatch = text.match(/^\\u(\d{4})$/),
             codePointMatch = text.match(/^&#(\d+);$/) || text.match(/^(\d+)$/);
