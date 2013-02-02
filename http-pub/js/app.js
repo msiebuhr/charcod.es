@@ -1,14 +1,6 @@
 /*global $, _gaq, unescape, escape, search*/
 
-// Configuring require.js for the app
-require.config({
-    paths: {
-        'jquery' : 'http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min',
-        //'ga': ('https:' === document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js'
-    }
-});
-
-require(['jquery', 'search', /*'ga'*/], function ($, Search, ga) {
+require(['search'], function (Search) {
     /* Determine if `text` is a char-code short-cut of some sort or a plain
      * search-term.
      */
