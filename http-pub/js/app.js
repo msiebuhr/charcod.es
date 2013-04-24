@@ -99,7 +99,7 @@ require(['search'], function (Search) {
 
                         // Set HTML names
                         if (info.altnames && info.altnames.html) {
-                            htmlCodes.push('&amp;#' + info.altnames.html + ';');
+                            htmlCodes.push('&amp;' + info.altnames.html + ';');
                         }
                         tpl.find('.char-html').html(htmlCodes.join("<br>"));
 
