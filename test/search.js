@@ -71,7 +71,7 @@ describe('Search', function () {
 
         it("Has n (name) on objects", function () {
             for(var i = 0; i < data.length; i += 1) {
-                assert('n' in data[i]);
+                assert.property(data[i], 'n');
             }
         });
 
@@ -82,6 +82,7 @@ describe('Search', function () {
                 s = new Search();
 
                 data.forEach(function (code) { 
+                    assert.property(code, 'n');
                     var words = code.n.split();
                     if ('a' in code) {
                         words = words.concat(code.a);
