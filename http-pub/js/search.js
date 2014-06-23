@@ -1,5 +1,6 @@
 define(function (util) {
-    // {{{ wordToTrigrams(word)
+    /* Convert at word to a list of trigrams.
+     */
     function wordToTrigrams(word) {
         word = word.toLowerCase();
         if (word.length === 0) {
@@ -13,15 +14,16 @@ define(function (util) {
         }
         return triGrams;
     }
-    // }}}
 
+    /* Constructor for the search state.
+     */
     function Search() {
         this.trigramTable = {};
         this.resultIndex = [];
     }
 
-    /* External functions */
-    // {{{ addTerm(words, data)
+    /* Add a new search term
+     */
     Search.prototype.addTerm = function (words, data) {
         var trigrams = {};
 
@@ -38,9 +40,9 @@ define(function (util) {
             }
         }
     };
-    // }}}
 
-    // {{{ search(text, maxResults)
+    /* Do an actual search
+     */
     Search.prototype.search = function (text, maxResults) {
         var that = this,
             words = text.toLowerCase().split(" "),
