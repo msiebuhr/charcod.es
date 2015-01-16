@@ -115,6 +115,16 @@ describe('Search', function () {
                 assert(found, "{n: tomato ...} not found");
             });
 
+            it.skip('Search for "⚒" returns HAMMER AND PICK', function () {
+                var res = s.search('⚒'),
+                    found = false;
+
+                assert.isArray(res);
+                // HAMMER AND PICK should be the first result
+                assert.operator(res.length, '>', 0, 'Expected non-empty array');
+                assert.deepEqual(res[0].n, 'hammer and pick');
+            });
+
             it("Search with maxResults=1 return only one result", function () {
                 assert.lengthOf(s.search('arrow', 1), 1);
             });
