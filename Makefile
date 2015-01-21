@@ -16,7 +16,6 @@ http-pub-production: http-pub/index.html $(HTTP_PUB_FILES) http-pub/data.json
 		--root $(<D) \
 		--outroot $@ \
 		$<
-	cp http-pub/data.json $@/
 
 # Set up git pages
 # (cd gh-pages; git checkout --orphan gh-pages; git rm -rf .)

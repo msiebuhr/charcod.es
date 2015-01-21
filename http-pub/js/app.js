@@ -177,7 +177,7 @@ require(['search'], function (Search) {
 
     // {{{ load data
     $.ajax({
-        url: 'data.json',
+        url: GETSTATICURL('data.json'),
         dataType: 'json',
         success: function (data) {
             var i,
