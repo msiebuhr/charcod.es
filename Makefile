@@ -11,6 +11,7 @@ run: http-pub http-pub/data.json
 	(cd $<; python -m SimpleHTTPServer)
 
 http-pub-production: http-pub/index.html $(HTTP_PUB_FILES) http-pub/data.json
+	rm -rf $@/*
 	./node_modules/.bin/buildProduction \
 		--manifest \
 		--root $(<D) \
@@ -25,7 +26,7 @@ gh-pages:
 
 commit-gh-pages: http-pub/data.json gh-pages http-pub-production
 	(cd gh-pages; git pull origin gh-pages)
-	rm -r gh-pages/static/*
+	(cd gh-pages; git rm index.\* static/\*)
 	cp -vr http-pub-production/* gh-pages/
 	(cd gh-pages; git add .; git commit --all --edit --message="Publish master@$(CURRENT_GIT).")
 
