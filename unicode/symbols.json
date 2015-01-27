@@ -1,3 +1,9 @@
 {
-    "⌚": { "alias": ["clock", "time"] }
+    "⌚": { "alias": ["clock", "time"] },
+    "⚠": { "alias": ["error", "failure"] },
+    "⚙": { "alias": ["settings", "preferences"] },
+    "⚒": { "alias": ["work"] },
+    "⚑": { "alias": ["mark"] },
+    "⚐": { "alias": ["mark"] },
+    "☁": { "alias": ["internet", "network"] }
 }
