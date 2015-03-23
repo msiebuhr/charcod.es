@@ -1,6 +1,6 @@
-
 {
     "⇪": { "alias": ["Keyboard", "CAPS LOCK"] },
+    "⇧": { "alias": ["Keyboard", "shift"] },
     "↹": { "alias": ["Keyboard", "Tabulator"] },
     "⌫": { "alias": ["Keyboard", "Backspace", "<--", "<x"] },
     "⌦": { "alias": ["Keyboard", "Delete", "-->", "x>"] },
