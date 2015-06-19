@@ -269,7 +269,7 @@ require(['search'], function (Search) {
         if (!location.hash) {
             return;
         }
-        var h = location.hash.split('#')[1];
+        var h = decodeURIComponent(location.hash.split('#')[1]);
 
         // Two elements → search-term/char-to-highlight
         // One element → char-to-highlight (if it matches a char)
