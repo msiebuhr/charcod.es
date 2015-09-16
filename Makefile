@@ -10,6 +10,13 @@ test: http-pub/data.json
 run: http-pub http-pub/data.json
 	(cd $<; python -m SimpleHTTPServer)
 
+run-production: http-pub-production
+	(cd $<; python -m SimpleHTTPServer)
+
+run-gh-pages: gh-pages
+	(cd $<; python -m SimpleHTTPServer)
+
+
 http-pub-production: http-pub/index.html $(HTTP_PUB_FILES) http-pub/data.json
 	rm -rf $@/*
 	./node_modules/.bin/buildProduction \
