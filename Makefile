@@ -26,7 +26,7 @@ gh-pages:
 
 commit-gh-pages: http-pub/data.json gh-pages http-pub-production
 	(cd gh-pages; git pull origin gh-pages)
-	(cd gh-pages; git rm index.\* static/\*)
+	(cd gh-pages; find . -type f \! -name CNAME \! -regex '.*git.*' -print0 | xargs -0 git rm)
 	cp -vr http-pub-production/* gh-pages/
 	(cd gh-pages; git add .; git commit --all --edit --message="Publish master@$(CURRENT_GIT).")
 
