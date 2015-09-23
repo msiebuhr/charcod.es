@@ -62,6 +62,7 @@ require(['search'], function (Search) {
         popup = (function () {
             var active,
                 info,
+                cpb,
                 getTpl = function (codePoint) {
                     var info = unicodeTable[codePoint],
                         tpl = $('.templates .charInfo').clone(),
@@ -112,6 +113,13 @@ require(['search'], function (Search) {
                         } else {
                             tpl.find('.char-latex-row').hide();
                         }
+
+                        // Activate clipboard button
+                        var btn = tpl.find('.copyButton')[0];
+                        if (btn) {
+                            btn.setAttribute('data-clipboard-text', String.fromCharCode(codePoint));
+                            cpb = clipboardButton(btn);
+                        }
                     }
 
                     return tpl;
@@ -143,6 +151,10 @@ require(['search'], function (Search) {
                     active.removeClass('active');
                     if (info) {
                         info.remove();
+                    }
+                    if (cpb) {
+                        cpb.destroy();
+                        cpb = undefined;
                     }
                     active = info = undefined;
                 }
