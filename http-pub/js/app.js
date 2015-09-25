@@ -62,6 +62,7 @@ require(['search'], function (Search) {
         popup = (function () {
             var active,
                 info,
+                cpb,
                 getTpl = function (codePoint) {
                     var info = unicodeTable[codePoint],
                         tpl = $('.templates .charInfo').clone(),
@@ -93,9 +94,6 @@ require(['search'], function (Search) {
                         tpl.find('.char-group')
                             .attr('href', '#' + info.b)
                             .html(info.b);
-                        if (info.a && info.a.length > 0) {
-                            tpl.find(".aliases").html(info.a.join(', '));
-                        }
 
                         // Set HTML names
                         if (info.altnames && info.altnames.html) {
@@ -106,11 +104,32 @@ require(['search'], function (Search) {
                         // Track the group/block of what chars people are clicking.
                         _gaq.push(['_trackEvent', 'popup', 'activate', info.b]);
 
-                        // LaTeX names
+                        // LaTeX names (or hide the row)
                         if (info.altnames && info.altnames.latex) {
                             tpl.find('.char-latex').html(info.altnames.latex);
                         } else {
                             tpl.find('.char-latex-row').hide();
+                        }
+
+                        // Aliases (or hide the row)
+                        if (info.a && info.a.length > 0) {
+                            tpl.find('.char-aliases').html(info.a.join(', '));
+                        } else {
+                            tpl.find('.char-aliases-row').hide();
+                        }
+
+                        // Activate clipboard button
+                        var btn = tpl.find('.copyButton')[0];
+                        // Remove button if we're in Safari. Doesn't support copy/paste...
+                        // Safari: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11) AppleWebKit/601.1.56 (KHTML, like Gecko) Version/9.0 Safari/601.1.56
+                        // Chrome: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.85 Safari/537.36
+                        if (btn && navigator.userAgent.indexOf(' Safari/') > 0 && navigator.userAgent.indexOf(' Chrome/') === -1) {
+                            tpl.find('.copyButton').hide();
+                        } else if (btn) {
+                            // Otherwise, make it copy the right data
+                            _gaq.push(['_trackEvent', 'copy-button', info.b]);
+                            btn.setAttribute('data-clipboard-text', String.fromCodePoint(codePoint));
+                            cpb = clipboardButton(btn);
                         }
                     }
 
@@ -143,6 +162,10 @@ require(['search'], function (Search) {
                     active.removeClass('active');
                     if (info) {
                         info.remove();
+                    }
+                    if (cpb) {
+                        cpb.destroy();
+                        cpb = undefined;
                     }
                     active = info = undefined;
                 }
