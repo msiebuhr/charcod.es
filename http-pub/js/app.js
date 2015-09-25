@@ -116,7 +116,13 @@ require(['search'], function (Search) {
 
                         // Activate clipboard button
                         var btn = tpl.find('.copyButton')[0];
-                        if (btn) {
+                        // Remove button if we're in Safari. Doesn't support copy/paste...
+                        // Safari: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11) AppleWebKit/601.1.56 (KHTML, like Gecko) Version/9.0 Safari/601.1.56
+                        // Chrome: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.85 Safari/537.36
+                        if (btn && navigator.userAgent.indexOf(' Safari/') > 0 && navigator.userAgent.indexOf(' Chrome/') === -1) {
+                            tpl.find('.copyButton').hide();
+                        } else if (btn) {
+                            // Otherwise, make it copy the right data
                             _gaq.push(['_trackEvent', 'copy-button', info.b]);
                             btn.setAttribute('data-clipboard-text', String.fromCodePoint(codePoint));
                             cpb = clipboardButton(btn);
