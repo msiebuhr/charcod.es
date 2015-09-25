@@ -117,6 +117,7 @@ require(['search'], function (Search) {
                         // Activate clipboard button
                         var btn = tpl.find('.copyButton')[0];
                         if (btn) {
+                            _gaq.push(['_trackEvent', 'copy-button', info.b]);
                             btn.setAttribute('data-clipboard-text', String.fromCodePoint(codePoint));
                             cpb = clipboardButton(btn);
                         }
