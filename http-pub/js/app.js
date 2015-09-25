@@ -94,9 +94,6 @@ require(['search'], function (Search) {
                         tpl.find('.char-group')
                             .attr('href', '#' + info.b)
                             .html(info.b);
-                        if (info.a && info.a.length > 0) {
-                            tpl.find(".aliases").html(info.a.join(', '));
-                        }
 
                         // Set HTML names
                         if (info.altnames && info.altnames.html) {
@@ -107,11 +104,18 @@ require(['search'], function (Search) {
                         // Track the group/block of what chars people are clicking.
                         _gaq.push(['_trackEvent', 'popup', 'activate', info.b]);
 
-                        // LaTeX names
+                        // LaTeX names (or hide the row)
                         if (info.altnames && info.altnames.latex) {
                             tpl.find('.char-latex').html(info.altnames.latex);
                         } else {
                             tpl.find('.char-latex-row').hide();
+                        }
+
+                        // Aliases (or hide the row)
+                        if (info.a && info.a.length > 0) {
+                            tpl.find('.char-aliases').html(info.a.join(', '));
+                        } else {
+                            tpl.find('.char-aliases-row').hide();
                         }
 
                         // Activate clipboard button
