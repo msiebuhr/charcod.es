@@ -2,6 +2,7 @@
     "⌚": { "alias": ["clock", "time"] },
     "⚠": { "alias": ["error", "failure"] },
     "⚙": { "alias": ["settings", "preferences"] },
+    "∞": { "alias": ["permalink"] },
     "⚒": { "alias": ["work"] },
     "⚑": { "alias": ["mark"] },
     "⚐": { "alias": ["mark"] },
