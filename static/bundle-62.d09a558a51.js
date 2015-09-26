@@ -627,7 +627,7 @@ $("#results").on("click","a",function(e){u.activate($(e.target)),e.preventDefaul
 var c,f=$("#searchField")
 f.keyup(function(){c&&window.clearTimeout(c),c=window.setTimeout(function(){a(f.val().trim())},250)}),$(".form-search").submit(function(){return a(f.val().trim()),!1})
 var d=new e
-$.ajax({url:"static/data.ec74208193.json",dataType:"json",success:function(e){var t,n,r,i,o=e.length
+$.ajax({url:"static/data.025b3a084f.json",dataType:"json",success:function(e){var t,n,r,i,o=e.length
 for(t=0;o>t;t+=1){if(n=e[t],l[n.c]=n,r=[].concat(n.n.split(" "),[n.b],n.a?n.a:[]),n.altnames)for(i in n.altnames)r.push(n.altnames[i])
 d.addTerm(r,n.c)}f.val()&&a(f.val()),s()},error:function(){throw new Error("could not load data.json: "+arguments)}}),window.onhashchange=function(e){e.newURL!==e.oldURL&&s()},s()}),define("app",function(){})
 ;
