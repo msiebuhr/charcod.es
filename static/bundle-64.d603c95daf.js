@@ -524,7 +524,13 @@ if(!s)return""
 for(var l="";++a<s;){var u=Number(arguments[a])
 if(!isFinite(u)||0>u||u>1114111||n(u)!=u)throw RangeError("Invalid code point: "+u)
 65535>=u?o.push(u):(u-=65536,e=(u>>10)+55296,r=u%1024+56320,o.push(e,r)),(a+1==s||o.length>i)&&(l+=t.apply(null,o),o.length=0)}return l}
-e?e(String,"fromCodePoint",{value:r,configurable:!0,writable:!0}):String.fromCodePoint=r}(),String.prototype.trim||(String.prototype.trim=function(){return this.replace(/^\s+|\s+$/g,"")})
+e?e(String,"fromCodePoint",{value:r,configurable:!0,writable:!0}):String.fromCodePoint=r}(),String.prototype.codePointAt||!function(){"use strict"
+var e=function(){try{var e={},t=Object.defineProperty,n=t(e,e,e)&&t}catch(r){}return n}(),t=function(e){if(null==this)throw TypeError()
+var t=String(this),n=t.length,r=e?Number(e):0
+if(r!=r&&(r=0),0>r||r>=n)return void 0
+var i,o=t.charCodeAt(r)
+return o>=55296&&56319>=o&&n>r+1&&(i=t.charCodeAt(r+1),i>=56320&&57343>=i)?1024*(o-55296)+i-56320+65536:o}
+e?e(String.prototype,"codePointAt",{value:t,configurable:!0,writable:!0}):String.prototype.codePointAt=t}(),String.prototype.trim||(String.prototype.trim=function(){return this.replace(/^\s+|\s+$/g,"")})
 var requirejs,require,define
 !function(global){function isFunction(e){return"[object Function]"===ostring.call(e)}function isArray(e){return"[object Array]"===ostring.call(e)}function each(e,t){if(e){var n
 for(n=0;n<e.length&&(!e[n]||!t(e[n],n,e));n+=1);}}function eachReverse(e,t){if(e){var n
@@ -609,10 +615,10 @@ for(var l in a)s.push({code:l,score:a[l]})
 if(s.length>0){s.sort(function(e,t){return t.score!==e.score?t.score-e.score:e.code-t.code})
 for(var u=(Math.ceil(s[0].score/2),[]),c=0;c<s.length&&n>c;c+=1)u.push(s[c])
 return u.map(function(e){return r.resultIndex[e.code]})}return[]},t}),require(["search"],function(e){function t(e){var t=e.match(/^\\u([\dABCDEFabcdef]{4})$/),n=e.match(/^&#(\d+);$/)||e.match(/^(\d+)$/),r=void 0
-return t?r=parseInt(t[1],16):n?r=n[1]:1===e.length&&(r=e.charCodeAt(0)),r}function n(e){return Math.floor((e-65536)/1024)+55296}function r(e){return(e-65536)%1024+56320}function i(e){if(65535>=e)return"\\u"+(e+65536).toString(16).substr(-4).toUpperCase()
+return t?r=parseInt(t[1],16):n?r=n[1]:1===e.length&&(r=e.codePointAt(0)),r}function n(e){return Math.floor((e-65536)/1024)+55296}function r(e){return(e-65536)%1024+56320}function i(e){if(65535>=e)return"\\u"+(e+65536).toString(16).substr(-4).toUpperCase()
 throw"Code point outside BMP cannot be encoded."}function o(e){return 65535>=e?i(e):i(n(e))+i(r(e))}function a(e){_gaq.push(["_trackEvent","search",void 0,e])
 var t=[],n=e.match(/^\\u(\d{4})$/),r=e.match(/^&#(\d+);$/)||e.match(/^(\d+)$/)
-t=n?[parseInt(n[1],16)]:r?[r[1]]:d.search(e),1===e.length&&0===t.length&&(t=[e.charCodeAt(0)]),0===t.length?$("#help").show():$("#help").hide(),$("#results").html($.map(t,function(e){var t=l[e]&&-1!==l[e].n.indexOf("combining"),n=(t?"&#9676;":"")+"&#"+e+";"
+t=n?[parseInt(n[1],16)]:r?[r[1]]:d.search(e),e.length>=1&&0===t.length&&(t=[e.codePointAt(0)]),0===t.length?$("#help").show():$("#help").hide(),$("#results").html($.map(t,function(e){var t=l[e]&&-1!==l[e].n.indexOf("combining"),n=(t?"&#9676;":"")+"&#"+e+";"
 return'<a href="#id'+e+'" id="id'+e+'">'+n+"</a>"}).join("")),1===t.length&&u.activate($("#results a").first())}function s(){if(location.hash){var e=decodeURIComponent(location.hash.split("#")[1]),n=e.match(/^([^\/]+)\/(.*)$/),r=t(e),i=void 0,o=void 0
 if(n?(i=n[1],o=n[2]):r?i=o=r:(i=e,o=void 0),o&&void 0===i&&(i=o),f.val(i),a(i),o){var s=$("#id"+o).first()
 s&&u.activate(s)}}}document.getElementById("searchField").focus(),document.forms[0].onsubmit=function(){return!1},_gaq=window._gaq||[],_gaq.push(["_setAccount","UA-33198175-1"]),_gaq.push(["_setDomainName","charcod.es"]),_gaq.push(["_trackPageview"])
