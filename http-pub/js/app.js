@@ -14,7 +14,8 @@ require(['search'], function (Search) {
         } else if (codePointMatch) {
             code = codePointMatch[1];
         } else if (text.length === 1) {
-            code = text.charCodeAt(0);
+            // TODO: Should check if first char is part of a surrogate pair
+            code = text.codePointAt(0);
         }
 
         return code;
@@ -260,10 +261,11 @@ require(['search'], function (Search) {
             codes = search.search(text);
         }
 
-        //console.log(codes);
-        if (text.length === 1 && codes.length === 0) {
+        // If we don't find any codes, assume it's a char that has been
+        // pasted + allow for surrogate pairs.
+        if (text.length >= 1 && codes.length === 0) {
             // Assume unicode input
-            codes = [text.charCodeAt(0)];
+            codes = [text.codePointAt(0)];
         }
 
         // Show help?
