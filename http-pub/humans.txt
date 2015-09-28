@@ -1,0 +1,15 @@
+/* TEAM */
+    Chef: Morten Siebuhr
+    Contact: http://sbhr.dk
+    Twitter: @msiebuhr
+
+/* THANKS */
+    Chielf-copy-paster: Ole Michelsen
+
+    JavaScript/CSS fixer: Peter Müller
+
+    Surrogate pairs doctor: Bram Stein
+
+/* SITE */
+    Standards: HTML5, Node
+    Components: jQuery, Assetgraph-builder
