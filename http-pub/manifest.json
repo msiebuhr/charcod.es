@@ -1,0 +1,8 @@
+{
+    "short_name": "Charcod.es",
+    "name": "Charcod.es",
+    "icons": [ ],
+    "start_url": "/?appmode=1",
+    "display": "standalone",
+    "orientation": "landscape"
+}
