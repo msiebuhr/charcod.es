@@ -21,6 +21,7 @@ http-pub-production: http-pub/index.html $(HTTP_PUB_FILES) http-pub/data.json
 	rm -rf $@/*
 	./node_modules/.bin/buildProduction \
 		--manifest \
+		--sourcemaps \
 		--root $(<D) \
 		--outroot $@ \
 		$<
