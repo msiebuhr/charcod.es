@@ -23,6 +23,7 @@ http-pub-production: http-pub/index.html $(HTTP_PUB_FILES) http-pub/data.json
 		--manifest \
 		--sourcemaps \
 		--subresourceintegrity \
+		--contentsecuritypolicy \
 		--root $(<D) \
 		--outroot $@ \
 		$<
