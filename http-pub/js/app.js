@@ -201,7 +201,7 @@ require(['search'], function (Search) {
 
     // {{{ load data
     $.ajax({
-        url: GETSTATICURL('data.json'),
+        url: '/data.json'.toString('url'),
         dataType: 'json',
         success: function (data) {
             var i,
