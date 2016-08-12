@@ -1,6 +1,12 @@
 /*global $, _gaq, unescape, escape, search*/
 
-require(['search'], function (Search) {
+require([
+    'search',
+    'less!../css/elements.less',
+    'less!../css/font.less',
+    'less!../css/app.less',
+    'less!../css/info.less'
+], function (Search) {
     /* Determine if `text` is a char-code short-cut of some sort or a plain
      * search-term.
      */
