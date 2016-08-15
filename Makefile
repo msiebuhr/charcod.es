@@ -21,6 +21,9 @@ http-pub-production: http-pub/index.html $(HTTP_PUB_FILES) http-pub/data.json
 	rm -rf $@/*
 	./node_modules/.bin/buildProduction \
 		--manifest \
+		--sourcemaps \
+		--subresourceintegrity \
+		--contentsecuritypolicy \
 		--root $(<D) \
 		--outroot $@ \
 		$<
@@ -61,6 +64,7 @@ clean:
 	rm -rf http-pub/data.json
 	rm -rf unicode/00-base-unicode.json unicode/01-w3c-unicode.json
 	rm -rf /tmp/ucd.*.flat.zip
+	rm -fr http-pub-production
 
 distclean: clean
 	rm -rf ucd.nounihan.flat.xml w3c-unicode.xml http-pub-production
