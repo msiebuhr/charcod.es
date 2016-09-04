@@ -5,12 +5,12 @@
   "version": "0.0.0",
   "dependencies": {
     "JSONStream": "*",
+    "chai": "~1.4.2",
+    "mocha": "~1.7.4",
     "node-expat": "*",
     "optimist": "*",
-    "underscore": "*",
     "requirejs": "~2.1.2",
-    "chai": "~1.4.2",
-    "mocha": "~1.7.4"
+    "underscore": "*"
   },
   "devDependencies": {
     "assetgraph-builder": "^5.0.0-7",
