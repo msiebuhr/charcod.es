@@ -13,7 +13,7 @@
     "mocha": "~1.7.4"
   },
   "devDependencies": {
-    "assetgraph-builder": "^5.0.0-3",
+    "assetgraph-builder": "^5.0.0-7",
     "less": "^2.5.1"
   },
   "optionalDependencies": {},
