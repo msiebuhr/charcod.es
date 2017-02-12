@@ -80,12 +80,12 @@ require([
 
                     // Set location-hash intelligently
                     var searchTerm = $('#searchField').val(),
-                        permaLink = searchTerm + '/' + codePoint,
+                        permaLink = encodeURIComponent(searchTerm) + '/' + codePoint,
                         permaLinkChar = codePoint;
                     if (searchTerm === codePoint) {
                         permaLink = codePoint;
                     }
-                    location.hash = '#' + permaLink;
+                    location.href = '#' + permaLink;
 
                     tpl.find('h2').html((combining ? "&#9676;" : "") + '&#' + codePoint + ';');
                     tpl.find('.permalink').attr('href', '#' + permaLinkChar);
@@ -300,7 +300,7 @@ require([
         if (!location.hash) {
             return;
         }
-        var h = decodeURIComponent(location.hash.split('#')[1]);
+        var h = location.href.split('#')[1];
 
         // Two elements → search-term/char-to-highlight
         // One element → char-to-highlight (if it matches a char)
@@ -312,19 +312,18 @@ require([
             highlight = undefined;
 
         if (test) {
-            searchTerm = test[1];
+            searchTerm = decodeURIComponent(test[1]);
             highlight = test[2];
         } else if (isCode) {
             searchTerm = highlight = isCode;
         } else {
-            searchTerm = h;
+            searchTerm = decodeURIComponent(h);
             highlight = undefined;
         }
 
         if (highlight && searchTerm === undefined) {
             searchTerm = highlight;
         }
-
         searchField.val(searchTerm);
         searchAndShow(searchTerm);
 
