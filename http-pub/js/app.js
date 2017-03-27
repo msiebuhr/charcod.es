@@ -7,6 +7,19 @@ require([
     'less!../css/app.less',
     'less!../css/info.less'
 ], function (Search) {
+    function leftPad(str, length, padChar) {
+        padChar = padChar || ' ';
+        str = String(str);
+        if (String.prototype.repeat) {
+            str = padChar.repeat(Math.max(0, length - str.length)) + str;
+        } else {
+            while (str.length < length) {
+                str = padChar + str;
+            }
+        }
+        return str;
+    }
+
     /* Determine if `text` is a char-code short-cut of some sort or a plain
      * search-term.
      */
@@ -93,7 +106,7 @@ require([
                     // Source code name
                     tpl.find('.char-source').html(codePointToString(parseInt(codePoint, 10)));
                     // Code point
-                    tpl.find('.char-codepoint').html(codePoint);
+                    tpl.find('.char-codepoint').html('U+' + leftPad(parseInt(codePoint, 10).toString(16).toUpperCase(), 4, '0'));
 
                     if (info) {
                         tpl.find('h3').html(info.n);
