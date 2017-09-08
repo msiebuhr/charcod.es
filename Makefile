@@ -45,7 +45,7 @@ push-gh-pages:
 	(cd gh-pages; git push origin gh-pages)
 
 ucd.nounihan.flat.xml:
-	cat /tmp/ucd.nounihan.flat.zip | curl -s -C - http://www.unicode.org/Public/8.0.0/ucdxml/ucd.nounihan.flat.zip > /tmp/ucd.nounihan.flat.zip
+	cat /tmp/ucd.nounihan.flat.zip | curl -s -C - http://www.unicode.org/Public/10.0.0/ucdxml/ucd.nounihan.flat.zip > /tmp/ucd.nounihan.flat.zip
 	unzip -p /tmp/ucd.nounihan.flat.zip > $@
 
 w3c-unicode.xml:
