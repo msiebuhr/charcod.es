@@ -26,3 +26,9 @@ files in the `unicode/`-directory.
 
 Feel free to fork and add ASCII-fications and what not to these files.
 
+Building/publishing
+-------------------
+
+`make run` will get the basics going on http://localhost:8000/.
+
+Production things are done with `make commit-gh-pages` and then `make push-gh-pages`.
