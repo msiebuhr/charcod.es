@@ -44,11 +44,11 @@ push-gh-pages:
 	(cd gh-pages; git pull origin gh-pages)
 	(cd gh-pages; git push origin gh-pages)
 
-ucd.nounihan.flat.xml:
+ucd.nounihan.flat.xml: Makefile
 	curl -s -C - http://www.unicode.org/Public/10.0.0/ucdxml/ucd.nounihan.flat.zip > /tmp/ucd.nounihan.flat.zip
 	unzip -p /tmp/ucd.nounihan.flat.zip > $@
 
-w3c-unicode.xml:
+w3c-unicode.xml: Makefile
 	curl -s -C - http://www.w3.org/2003/entities/2007xml/unicode.xml > $@
 
 unicode/01-w3c-unicode.json: w3c-unicode.xml w3c-xml2json.js
