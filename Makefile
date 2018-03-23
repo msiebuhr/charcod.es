@@ -20,7 +20,7 @@ run-gh-pages: gh-pages
 http-pub-production: http-pub/index.html $(HTTP_PUB_FILES) http-pub/data.json
 	rm -rf $@/*
 	./node_modules/.bin/buildProduction \
-		--manifest \
+		--precacheserviceworker \
 		--sourcemaps \
 		--subresourceintegrity \
 		--contentsecuritypolicy \
