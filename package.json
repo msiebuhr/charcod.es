@@ -13,7 +13,7 @@
     "underscore": "*"
   },
   "devDependencies": {
-    "assetgraph-builder": "6.1.1",
+    "assetgraph-builder": "6.2.0",
     "less": "^2.5.1"
   },
   "optionalDependencies": {},
