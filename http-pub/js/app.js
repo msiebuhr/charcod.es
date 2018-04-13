@@ -1,4 +1,4 @@
-/*global $, _gaq, unescape, escape, search*/
+/*global $, unescape, escape, search*/
 
 require([
     'search',
@@ -73,11 +73,6 @@ require([
         return false;
     };
 
-    _gaq = window._gaq || [];
-    _gaq.push(['_setAccount', 'UA-33198175-1']);
-    _gaq.push(['_setDomainName', 'charcod.es']);
-    _gaq.push(['_trackPageview']);
-
     var unicodeTable = {},
         popup = (function () {
             var active,
@@ -121,9 +116,6 @@ require([
                         }
                         tpl.find('.char-html').html(htmlCodes.join("<br>"));
 
-                        // Track the group/block of what chars people are clicking.
-                        _gaq.push(['_trackEvent', 'popup', 'activate', info.b]);
-
                         // LaTeX names (or hide the row)
                         if (info.altnames && info.altnames.latex) {
                             tpl.find('.char-latex').html(info.altnames.latex);
@@ -147,7 +139,6 @@ require([
                             tpl.find('.copyButton').hide();
                         } else if (btn) {
                             // Otherwise, make it copy the right data
-                            _gaq.push(['_trackEvent', 'copy-button', info.b]);
                             btn.setAttribute('data-clipboard-text', String.fromCodePoint(codePoint));
                             cpb = clipboardButton(btn);
                         }
@@ -178,7 +169,6 @@ require([
                 },
 
                 deactivate: function () {
-                    _gaq.push(['_trackEvent', 'popup', 'deactivate']);
                     active.removeClass('active');
                     if (info) {
                         info.remove();
@@ -267,7 +257,6 @@ require([
 
     // {{{ searchAndShow(text)
     function searchAndShow(text) {
-        _gaq.push(['_trackEvent', 'search', undefined, text]);
         var codes = [],
             sourceMatch = text.match(/^\\u(\d{4})$/),
             codePointMatch = text.match(/^&#(\d+);$/) || text.match(/^(\d+)$/);
