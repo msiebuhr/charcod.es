@@ -7,8 +7,8 @@
 	<meta http-equiv="Content-Security-Policy" content="
 		default-src 'self';
 		style-src 'self' 'unsafe-inline';
-		script-src 'self' 'nonce-developmentonly' www.google-analytics.com ssl.google-analytics.com;
-		img-src 'self' www.google-analytics.com ssl.google-analytics.com;
+		script-src 'self' 'nonce-developmentonly';
+		img-src 'self';
 		object-src 'none'
 	">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -100,14 +100,6 @@
 			</table>
 		</aside>
 	</section>
-
-	<script nonce="developmentonly">
-		(function() {
-			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-		})();
-	</script>
 
 	<script src="3rdparty/jquery.1.7.2.min.js"></script>
 	<script src="3rdparty/clipboard-button.js"></script>
