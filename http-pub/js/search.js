@@ -46,7 +46,7 @@ define(function (util) {
     Search.prototype.search = function (text, maxResults) {
         var that = this,
             words = text.toLowerCase().split(" "),
-            maxResults = maxResults || 14 * 30,
+            maxResults = maxResults || 14 * 50,
             triGrams = [],
             charCodesFound = {};
 
