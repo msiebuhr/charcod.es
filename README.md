@@ -1,6 +1,8 @@
 Charcod.es
 ==========
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/6a3e51b6-d941-43ce-a06f-d42d162e7d82/deploy-status)](https://app.netlify.com/sites/eager-leavitt-9052d1/deploys)
+
 Find those nice - but ever elusive - unicode characters.
 
 How
@@ -29,4 +31,4 @@ Feel free to fork and add ASCII-fications and what not to these files.
 Building/publishing
 -------------------
 
-Deploys happen from <https://app.netlify.com/sites/eager-leavitt-9052d1>.
+Deploys happen from <https://netlify.com>.
