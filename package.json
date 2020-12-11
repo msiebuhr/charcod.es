@@ -6,7 +6,7 @@
   "dependencies": {
     "JSONStream": "*",
     "chai": "^4.2.0",
-    "mocha": "~1.7.4",
+    "mocha": "^8.2.1",
     "node-expat": "*",
     "optimist": "*",
     "requirejs": "~2.1.2",
