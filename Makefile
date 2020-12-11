@@ -13,10 +13,6 @@ run: http-pub http-pub/data.json
 run-production: http-pub-production
 	(cd $<; python3 -m http.server)
 
-run-gh-pages: gh-pages
-	(cd $<; python3 -m http.server)
-
-
 http-pub-production: http-pub/index.html $(HTTP_PUB_FILES) http-pub/data.json
 	rm -rf $@/*
 	./node_modules/.bin/buildProduction \
@@ -27,22 +23,6 @@ http-pub-production: http-pub/index.html $(HTTP_PUB_FILES) http-pub/data.json
 		--root $(<D) \
 		--outroot $@ \
 		$<
-
-# Set up git pages
-# (cd gh-pages; git checkout --orphan gh-pages; git rm -rf .)
-gh-pages:
-	git clone git@github.com:msiebuhr/charcod.es.git gh-pages
-	(cd gh-pages; git checkout gh-pages)
-
-commit-gh-pages: http-pub/data.json gh-pages http-pub-production
-	(cd gh-pages; git pull origin gh-pages)
-	(cd gh-pages; find . -type f \! -name CNAME \! -regex '.*git.*' -print0 | xargs -0 git rm)
-	cp -vr http-pub-production/* gh-pages/
-	(cd gh-pages; git add .; git commit --all --edit --message="Publish master@$(CURRENT_GIT).")
-
-push-gh-pages:
-	(cd gh-pages; git pull origin gh-pages)
-	(cd gh-pages; git push origin gh-pages)
 
 ucd.nounihan.flat.xml: Makefile
 	curl -s -C - http://www.unicode.org/Public/13.0.0/ucdxml/ucd.nounihan.flat.zip > /tmp/ucd.nounihan.flat.zip
